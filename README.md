@@ -4,7 +4,8 @@ PostgreSQL and pgAdmin tutorial:
 http://www.indjango.com/ubuntu-install-postgresql-and-pgadmin/
 NodeJs and NPM tutorial:
 https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-16-04
-
+SSH key tutorial:
+https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/
 
 1. Clone the repo using this command:
 `git clone git@github.com:andreidolhescu/internship-green-team.git`
