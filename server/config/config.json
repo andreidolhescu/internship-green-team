@@ -1,23 +1,24 @@
 {
   "development": {
     "username": "postgres",
-    "password": "yourPassword",
+    "password": "newpassword",
     "database": "assist-teach-me",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "yourPassword",
+    "password": "newpassword",
     "database": "assist-teach-me",
     "host": "127.0.0.1",
     "dialect": "postgres"
-  },
+},
   "production": {
     "username": "postgres",
-    "password": "yourPassword",
+    "password": "newpassword",
     "database": "assist-teach-me",
     "host": "127.0.0.1",
     "dialect": "postgres"
-  }
+    
+}
 }
