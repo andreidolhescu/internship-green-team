@@ -19,3 +19,16 @@ module.exports = (app) => {
     app.delete('/api/test/:testId', testController.destroy);
     // end examples
 }
+
+const userController = require('../controllers').users;
+
+module.exports = (app) => {
+    app.get('/api', (req,res) => res.status(200).send({
+        message: 'Welcome to the Users API!',
+    }));
+
+    app.post('/api/register', userController.create);
+    app.get('/api/register', userController.list);
+    app.put('/api/register/:id',userController.update);
+    app.delete('/api/register/:id', userController.destroy);
+};
