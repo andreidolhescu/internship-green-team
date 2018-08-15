@@ -29,6 +29,7 @@ module.exports = (app) => {
 
     app.post('/api/register', userController.create);
     app.get('/api/register', userController.list);
+    app.get('/api/register/:id', userController.retrive);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 };
