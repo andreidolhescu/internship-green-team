@@ -1,6 +1,7 @@
 const cors = require('cors'); // do not remove this
-
+const checkAuth = require('../middleware/check-out');
 const testController = require('../controllers').testController;
+
 
 module.exports = (app) => {
 
@@ -23,13 +24,14 @@ module.exports = (app) => {
 const userController = require('../controllers').users;
 
 module.exports = (app) => {
-    app.get('/api', (req,res) => res.status(200).send({
-        message: 'Welcome to the Users API!',
+    app.post('/api', checkAuth, (req,res) => res.status(200).send({
+        message: 'Welcome to the Users API! Token',
     }));
 
     app.post('/api/register', userController.create);
     app.get('/api/register', userController.list);
     app.get('/api/register/:id', userController.retrive);
+    app.post('/api/login', userController.login);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 };
