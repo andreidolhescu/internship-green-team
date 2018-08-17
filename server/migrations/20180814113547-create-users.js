@@ -34,6 +34,10 @@ module.exports = {
           len: [8,100]
         }
       },
+      forgotPassword: {
+        type: Sequelize.STRING,
+        defaultValue: 'default'
+      },
       admin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false

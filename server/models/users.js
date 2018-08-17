@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         len: [8,100]
       }
     },
+    forgotPassword: {
+      type: DataTypes.STRING,
+      defaultValue: 'default'
+    },
     admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false

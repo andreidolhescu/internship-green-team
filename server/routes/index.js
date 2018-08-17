@@ -32,6 +32,8 @@ module.exports = (app) => {
     app.get('/api/register', userController.list);
     app.get('/api/register/:id', userController.retrive);
     app.post('/api/login', userController.login);
+    app.post('/api/forgotPassword', userController.forgotPassword);
+    app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 };
