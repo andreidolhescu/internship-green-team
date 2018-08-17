@@ -17,6 +17,7 @@ module.exports = {
             last_name: req.body.last_name,
             email: req.body.email,
             password: hash,
+            admin: req.body.admin,
           })
           .then(todo => res.status(201).send(todo))
           .catch(error => res.status(400).send(error));
@@ -64,6 +65,7 @@ module.exports = {
                       last_name: req.body.last_name,
                       email: req.body.email,
                       password: req.body.password,
+                      admin: req.body.password
                   })
                   .then(() => res.status(200).send(user))
                   .catch((error) => res.status(400).send(error));
