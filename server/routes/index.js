@@ -1,6 +1,7 @@
 const cors = require('cors'); // do not remove this
 const checkAuth = require('../middleware/check-out');
 const testController = require('../controllers').testController;
+const chapters=require('../controllers').chapter;
 
 
 module.exports = (app) => {
@@ -36,4 +37,9 @@ module.exports = (app) => {
     app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
+
+    app.post('/api/listbycourse',chapters.listbycourse);
+    app.get('/api/listc/:testId',chapters.listc);
+    app.post('/api/addchapter',chapters.createc);
+    app.put('/api/updateAdmin/:testId',chapters.updateAdmin)
 };

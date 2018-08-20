@@ -12,7 +12,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       content: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate:{len:[0,500]
+        }
+      },
+      idCourse:{
+        allowNull: false,
+        type:Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
