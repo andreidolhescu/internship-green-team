@@ -10,10 +10,13 @@ module.exports = (req, res, next) => {
                 message: 'Failed authentification'
             });
             } else {
-                req.decoded = decoded;
+                if(decoded.admin){
+                    req.decoded = decoded;
+                    next();
+                }
+                res.send('Sorry you are not an admin!');
                 next();
             }
-            
         });
     } else {
         return res.status(400).send({
