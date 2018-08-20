@@ -1,56 +1,51 @@
-const Chapters = require('../models').Chapters;
-const User = require('../models').Users;
+const Quizzes = require('../models').Quizzes;
 
 module.exports = {
-    createc (req, res) {
-        return Chapters
+    createq (req, res) {
+        return Quizzes
             .create({
-            title: req.body.title,
             content:req.body.content,
             idCourse:req.body.idCourse   
             })
-            .then(chapter => res.status(201).send(chapter))
+            .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));
     },
-    listc(req, res) {
-        return Chapters
+    getByIdq (req, res) {
+        return Quizzes
             .findById(req.params.testId)
-            .then(chapter =>{ 
-                if (!chapter) {
-                    return res.status(404).send({
-                        message: 'Chapter Not Found',
-                    });
-                }else res.status(201).send(chapter)})
-            .catch(error => res.status(400).send(error));
+            .then(quiz => {
+                if (!quiz) {
+                  return res.status(404).send({
+                    message: 'Test Not Found',
+                  });
+                }
+                return res.status(200).send(quiz);
+              })
+              .catch(error => res.status(400).send(error));
     },
-    listbycourse(req, res) {
+    listbycourseq(req, res) {
         let idCourse=req.body.idCourse;
         if (!idCourse) {
             return res.status(400).send({
                 message: "Id course required!"
             });
         }
-         return Chapters
+         return Quizzes
             .findAll({
                 where:{
                     idCourse:idCourse
                 }
             })
-            .then(chapter => res.status(201).send(chapter))
+            .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));
     },
-    updateAdmin (req, res) {
+    updateAdminq (req, res) {
         return Chapters
             .findById(req.params.testId)
             .then(chapter => {
                 if (!chapter) {
                     return res.status(404).send({
                         message: 'Chapter Not Found',
-                    });
-                }
-                if (!req.body.title) {
-                    return res.status(400).send({
-                        message: "Title required!"
                     });
                 }
                 if (!req.body.content) {
@@ -63,19 +58,18 @@ module.exports = {
                         message: "idCourse required!"
                     });
                 }
-                if (!req.body.title&& !req.body.content && !req.body.idCourse ) {
+                if (!req.body.content && !req.body.idCourse ) {
                     return res.status(400).send({
                         message: "Miss!"
                     });
                 }
                 return chapter
                     .update({
-                        title: req.body.title || chapter.title,
                         content:req.body.content || chapter.content,
                         idCourse:req.body.idCourse || chapter.idCourse,
                     })
-                    .then(chapter =>{ 
-                        if (!chapter) {
+                    .then(quiz =>{ 
+                        if (!quiz) {
                             return res.status(404).send({
                                 message: 'Chapter Not Found',
                             });
@@ -84,21 +78,21 @@ module.exports = {
             })
             .catch((error) => res.status(400).send(error));
     },
-    destroy (req, res) {
-        return Chapters
+    destroyq (req, res) {
+        return Quizzes
             .findById(req.params.testId)
-            .then(chapter => {
-                if (!chapter) {
+            .then(quiz => {
+                if (!quiz) {
                     return res.status(404).send({
-                        message: 'Chapter not Found',
+                        message: 'Quiz not Found',
                     });
                 }
 
-                return chapter
+                return quiz
                     .destroy()
                     .then(() => res.status(200).send("Success"))
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
     }
-};
+}
