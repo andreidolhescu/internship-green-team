@@ -1,5 +1,6 @@
 const cors = require('cors'); // do not remove this
-const checkAuth = require('../middleware/check-out');
+const adminCheckAuth = require('../middleware/admin-check-out');
+const userCheckAuth = require('../middleware/user-check-out');
 const testController = require('../controllers').testController;
 const chapters=require('../controllers').chapter;
 
@@ -25,7 +26,7 @@ module.exports = (app) => {
 const userController = require('../controllers').users;
 
 module.exports = (app) => {
-    app.post('/api', checkAuth, (req,res) => res.status(200).send({
+    app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
         message: 'Welcome to the Users API! Token',
     }));
 
