@@ -2,6 +2,7 @@ const cors = require('cors'); // do not remove this
 const checkAuth = require('../middleware/check-out');
 const testController = require('../controllers').testController;
 const chapters=require('../controllers').chapter;
+const quizzes=require('../controllers').quiz;
 
 
 module.exports = (app) => {
@@ -42,5 +43,11 @@ module.exports = (app) => {
     app.get('/api/listc/:testId',chapters.listc);
     app.post('/api/addchapter',chapters.createc);
     app.put('/api/updateAdmin/:testId',chapters.updateAdmin);
-    app.delete('/api/deletechapter/:testId', chapters.destroy)
+    app.delete('/api/deletechapter/:testId', chapters.destroy);
+
+    app.post('/api/addquiz',quizzes.createq);
+    app.get('/api/listq/:testId',quizzes.getByIdq);
+    app.post('/api/listbycourseq',quizzes.listbycourseq);
+    app.put('/api/updateAdminq/:testId',quizzes.updateAdminq);
+    app.delete('/api/deletequiz/:testId',quizzes.destroyq);
 };
