@@ -1,7 +1,7 @@
 const cors = require('cors'); // do not remove this
 const checkAuth = require('../middleware/check-out');
 const testController = require('../controllers').testController;
-const chapters=require('../controllers').chapters;
+const chapters=require('../controllers').chapter;
 
 
 module.exports = (app) => {
