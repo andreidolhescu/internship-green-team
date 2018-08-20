@@ -1,4 +1,5 @@
 const Chapters = require('../models').Chapters;
+const User = require('../models').Users;
 
 module.exports = {
     createc (req, res) {
