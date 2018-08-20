@@ -50,6 +50,8 @@ module.exports = (app) => {
     app.get('/api/register', userController.list);
     app.get('/api/Dashboard', Dashboard.list); 
 
+    app.post('/api/Courses/listbyCategoryId', Courses.list);
+
     app.get('/api/register/:id', userController.retrive); 
     app.post('/api/login', userController.login); 
     app.post('/api/forgotPassword', userController.forgotPassword);
