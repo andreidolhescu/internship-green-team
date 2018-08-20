@@ -5,6 +5,19 @@ const testController = require('../controllers').testController;
 const chapters=require('../controllers').chapter;
 const quizzes=require('../controllers').quiz;
 
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString() + file.originalname);
+    }
+})
+
+const upload = multer({storage: storage});
+
 
 module.exports = (app) => {
 
@@ -25,6 +38,8 @@ module.exports = (app) => {
 }
 
 const userController = require('../controllers').users;
+const Dashboard = require('../controllers').Dashboard;
+const Courses = require('../controllers').Courses;
 
 module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
@@ -36,8 +51,14 @@ module.exports = (app) => {
 
 
     app.post('/api/register', userController.create);
-    app.get('/api/register',userCheckAuth, userController.list);
+
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
+    app.post('/api/Dashboard/add', Dashboard.create);
+    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
+
+    app.get('/api/register', userController.list);
+    app.get('/api/Dashboard', Dashboard.list);
+
     app.post('/api/login', userController.login);
     app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
     app.post('/api/reset/:passwordToken', userController.reset);
@@ -56,3 +77,4 @@ module.exports = (app) => {
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
 };
+
