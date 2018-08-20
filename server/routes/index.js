@@ -41,5 +41,6 @@ module.exports = (app) => {
     app.post('/api/listbycourse',chapters.listbycourse);
     app.get('/api/listc/:testId',chapters.listc);
     app.post('/api/addchapter',chapters.createc);
-    app.put('/api/updateAdmin/:testId',chapters.updateAdmin)
+    app.put('/api/updateAdmin/:testId',chapters.updateAdmin);
+    app.delete('/api/deletechapter/:testId', chapters.destroy)
 };

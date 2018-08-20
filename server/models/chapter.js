@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Chapter = sequelize.define('Chapter', {
+  const Chapters = sequelize.define('Chapters', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -8,9 +8,14 @@ module.exports = (sequelize, DataTypes) => {
     content:{
       type: DataTypes.STRING(500),
       allowNull: false
-    } 
+    },
+    idCourse:{
+      type:DataTypes.INTEGER,
+      allowNull: false
+    }
+
   });
-  Chapter.associate = function(models) {
+  Chapters.associate = function(models) {
     // associations can be defined here
      
     // Chapter.belongsTo(models.Course, {
@@ -28,5 +33,5 @@ module.exports = (sequelize, DataTypes) => {
     //   as: 'answers'
     // });
   };
-  return Chapter;
+  return Chapters;
 };

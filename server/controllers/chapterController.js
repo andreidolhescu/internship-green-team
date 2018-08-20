@@ -14,7 +14,12 @@ module.exports = {
     listc(req, res) {
         return Chapters
             .findById(req.params.testId)
-            .then(chapter => res.status(200).send(chapter))
+            .then(chapter =>{ 
+                if (!chapter) {
+                    return res.status(404).send({
+                        message: 'Chapter Not Found',
+                    });
+                }else res.status(201).send(chapter)})
             .catch(error => res.status(400).send(error));
     },
     listbycourse(req, res) {
@@ -68,7 +73,29 @@ module.exports = {
                         content:req.body.content || chapter.content,
                         idCourse:req.body.idCourse || chapter.idCourse,
                     })
-                    .then(() => res.status(200).send(chapter))
+                    .then(chapter =>{ 
+                        if (!chapter) {
+                            return res.status(404).send({
+                                message: 'Chapter Not Found',
+                            });
+                        }else res.status(201).send(chapter)})
+                    .catch((error) => res.status(400).send(error));
+            })
+            .catch((error) => res.status(400).send(error));
+    },
+    destroy (req, res) {
+        return Chapters
+            .findById(req.params.testId)
+            .then(chapter => {
+                if (!chapter) {
+                    return res.status(404).send({
+                        message: 'Chapter not Found',
+                    });
+                }
+
+                return chapter
+                    .destroy()
+                    .then(() => res.status(200).send("Success"))
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
