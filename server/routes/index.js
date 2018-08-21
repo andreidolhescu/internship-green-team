@@ -49,7 +49,6 @@ module.exports = (app) => {
     //    message:'Welcome to update;',
     //}));
 
-
     app.post('/api/register', userController.create);
 
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
@@ -70,8 +69,10 @@ module.exports = (app) => {
     app.post('/api/Courses/listbyCategoryId', Courses.list);
     app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
 
-    app.get('/api/register/:id', userController.retrive); 
     app.post('/api/login', userController.login); 
+  
+    app.get('/api/Dashboard/:CategoryId', userCheckAuth, Dashboard.getById);
+    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
 
     app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);

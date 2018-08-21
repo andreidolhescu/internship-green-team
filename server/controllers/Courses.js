@@ -1,6 +1,5 @@
 const courses = require('../models').courses;
 
-
 module.exports = {
     //add new course
     create (req, res) {

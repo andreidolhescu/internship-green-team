@@ -26,3 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   };
   return courses;
 };
+
+  
+
+
