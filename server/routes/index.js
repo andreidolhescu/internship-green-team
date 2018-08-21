@@ -1,7 +1,9 @@
 const cors = require('cors'); // do not remove this
-const checkAuth = require('../middleware/check-out');
+const adminCheckAuth = require('../middleware/admin-check-out');
+const userCheckAuth = require('../middleware/user-check-out');
 const testController = require('../controllers').testController;
-const quizOptionController = require('../controllers').QuizOptionsController;
+const chapters=require('../controllers').chapter;
+const quizzes=require('../controllers').quiz;
 
 
 module.exports = (app) => {
@@ -25,7 +27,7 @@ module.exports = (app) => {
 const userController = require('../controllers').users;
 
 module.exports = (app) => {
-    app.post('/api', checkAuth, (req,res) => res.status(200).send({
+    app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
         message: 'Welcome to the Users API! Token',
     }));
 
@@ -38,7 +40,16 @@ module.exports = (app) => {
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 
-    app.post('/api/addOptions', quizOptionController.create);
-    app.get('/api/optionsList', quizOptionController.list);
-    app.post('/api/optionsListquiz', quizOptionController.getById);
+
+    app.post('/api/listbycourse',chapters.listbycourse);
+    app.get('/api/listc/:testId',chapters.listc);
+    app.post('/api/addchapter',chapters.createc);
+    app.put('/api/updateAdmin/:testId',chapters.updateAdmin);
+    app.delete('/api/deletechapter/:testId', chapters.destroy);
+
+    app.post('/api/addquiz',quizzes.createq);
+    app.get('/api/listq/:testId',quizzes.getByIdq);
+    app.post('/api/listbycourseq',quizzes.listbycourseq);
+    app.put('/api/updateAdminq/:testId',quizzes.updateAdminq);
+    app.delete('/api/deletequiz/:testId',quizzes.destroyq);
 };

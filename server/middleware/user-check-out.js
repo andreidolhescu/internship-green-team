@@ -9,11 +9,10 @@ module.exports = (req, res, next) => {
                 return res.send({
                 message: 'Failed authentification'
             });
-            } else {
+            } else {   
                 req.decoded = decoded;
                 next();
             }
-            
         });
     } else {
         return res.status(400).send({
