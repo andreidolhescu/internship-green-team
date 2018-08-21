@@ -11,7 +11,7 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
-      idCourse:{
+      idChapter:{
         type:Sequelize.INTEGER,
         allowNull:false
       },

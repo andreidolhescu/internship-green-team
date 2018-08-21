@@ -69,5 +69,29 @@ module.exports = {
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
+    },
+
+    //allow admins to delete quiz options
+    destroy (req, res) {
+        idQuiz = req.body.idQuiz
+        return QuizOptions
+            .findOne({
+                where: {
+                    idQuiz: idQuiz
+                }
+            })
+            .then (quizoption => {
+                if (!quizoption) {
+                    return res.status(404).send ({
+                        message: 'Quiz Not Found',
+                    });
+                }
+
+                return quizoption 
+                    .destroy()
+                    .then( () => res.status(200).send())
+                    .catch((error) => res.status(400).send(error));
+            })
+            .catch((error) => res.status(400).send(error));
     }
 }

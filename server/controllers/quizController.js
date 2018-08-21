@@ -5,7 +5,7 @@ module.exports = {
         return Quizzes
             .create({
             content:req.body.content,
-            idCourse:req.body.idCourse   
+            idChapter:req.body.idChapter   
             })
             .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));
@@ -23,29 +23,29 @@ module.exports = {
               })
               .catch(error => res.status(400).send(error));
     },
-    listbycourseq(req, res) {
-        let idCourse=req.body.idCourse;
-        if (!idCourse) {
+    listbychapterq(req, res) {
+        let idChapter=req.body.idChapter;
+        if (!idChapter) {
             return res.status(400).send({
-                message: "Id course required!"
+                message: "Id chapter required!"
             });
         }
          return Quizzes
             .findAll({
                 where:{
-                    idCourse:idCourse
+                    idChapter:idChapter
                 }
             })
             .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));
     },
     updateAdminq (req, res) {
-        return Chapters
+        return Quizzes
             .findById(req.params.testId)
-            .then(chapter => {
-                if (!chapter) {
+            .then(quiz => {
+                if (!quiz) {
                     return res.status(404).send({
-                        message: 'Chapter Not Found',
+                        message: 'Quiz Not Found',
                     });
                 }
                 if (!req.body.content) {
@@ -53,27 +53,27 @@ module.exports = {
                         message: "Content required!"
                     });
                 }
-                if (!req.body.idCourse) {
+                if (!req.body.idChapter) {
                     return res.status(400).send({
-                        message: "idCourse required!"
+                        message: "idChapter required!"
                     });
                 }
-                if (!req.body.content && !req.body.idCourse ) {
+                if (!req.body.content && !req.body.idChapter ) {
                     return res.status(400).send({
                         message: "Miss!"
                     });
                 }
-                return chapter
+                return quiz
                     .update({
-                        content:req.body.content || chapter.content,
-                        idCourse:req.body.idCourse || chapter.idCourse,
+                        content:req.body.content || quiz.content,
+                        idChapter:req.body.idChapter || quiz.idChapter,
                     })
                     .then(quiz =>{ 
                         if (!quiz) {
                             return res.status(404).send({
                                 message: 'Chapter Not Found',
                             });
-                        }else res.status(201).send(chapter)})
+                        }else res.status(201).send(quiz)})
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
