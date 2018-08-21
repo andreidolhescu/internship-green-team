@@ -49,6 +49,6 @@ module.exports = (app) => {
     app.post('/api/addquiz',quizzes.createq);
     app.get('/api/listq/:testId',quizzes.getByIdq);
     app.post('/api/listbycourseq',quizzes.listbycourseq);
-    app.put('/api/updateAdminq/:testId',quizzes.updateAdminq);
+    app.put('/api/updateAdminq/:testId', adminCheckAuth, quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',quizzes.destroyq);
 };
