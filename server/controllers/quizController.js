@@ -68,12 +68,13 @@ module.exports = {
                         content:req.body.content || quiz.content,
                         idChapter:req.body.idChapter || quiz.idChapter,
                     })
-                    .then(quiz =>{ 
-                        if (!quiz) {
+                    .then(quizz =>{ 
+                        if (!quizz) {
                             return res.status(404).send({
-                                message: 'Chapter Not Found',
+                                message: 'Quizz Not Found',
                             });
                         }else res.status(201).send(quiz)})
+
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));

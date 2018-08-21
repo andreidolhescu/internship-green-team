@@ -51,21 +51,30 @@ module.exports = (app) => {
     //}));
 
     app.post('/api/register', userController.create);
+
+    app.get('/api/register/:id',userCheckAuth, userController.retrive);
+    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
+
+    app.post('/api/Dashboard/add', adminCheckAuth, Dashboard.create);
+    
     app.get('/api/register', userController.list);
-    app.get('/api/register/:id', userController.retrive); 
-    app.post('/api/login', userController.login);
-    app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
-  
-    app.post('/api/Dashboard/add', Dashboard.create); 
     app.get('/api/Dashboard', Dashboard.list);
-    app.get('/api/Dashboard/:CategoryId', Dashboard.getById);
-    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
-    app.delete('/api/Dashboard/:CategoryId', Dashboard.destroy);
-  
-    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create); 
-    app.post('/api/Courses/listbyCategoryId', Courses.list);
+    app.delete('/api/Dashboard/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
+
+    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
     app.get('/api/Courses/:courseId', Courses.getById);
+    app.post('/api/Courses/listbyidCategory', Courses.list);
+    app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
+
+    app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
+    app.post('/api/Courses/listbyCategoryId', Courses.list);
+    app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
+
+    app.post('/api/login', userController.login); 
   
+    app.get('/api/Dashboard/:CategoryId', userCheckAuth, Dashboard.getById);
+    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
+
     app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
@@ -87,5 +96,6 @@ module.exports = (app) => {
     app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
-
 };
+
+
