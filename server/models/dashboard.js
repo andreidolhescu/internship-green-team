@@ -5,11 +5,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       }
-    });
-  
-    Dashboard.associate = function(models) {
+    }, 
+    /*{
+      classMethods: {
+        associate: function(models) {
       // associations can be defined here
-    };
+          Dashboard.hasMany(models.course, {
+            primarykey: 'CategoryId',
+            onDelete: 'CASCADE'
+          });
+        }
+      }
+    }*/);
   
     return Dashboard;
   };

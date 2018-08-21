@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 
   const course = sequelize.define('course', {
+    
     title: {
       type: DataTypes.STRING,
       allowNull: false
@@ -14,11 +15,25 @@ module.exports = (sequelize, DataTypes) => {
     courseImage: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+
+    CategoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
     }
-  });
-  
-  course.associate = function(models) {
-    // associations can be defined here
-  };
+
+  },/* {
+    classMethods: {
+      associate: function(models) {
+        course.belongsTo(models.Dashboard, {
+          foreignKey: 'CategoryId',
+          onDelete: 'CASCADE'
+        });
+      }
+    }
+  }*/);
   return course;
-};
+}
+  
+
+ 
