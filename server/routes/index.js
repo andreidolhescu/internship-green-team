@@ -4,6 +4,7 @@ const userCheckAuth = require('../middleware/user-check-out');
 const testController = require('../controllers').testController;
 const chapters=require('../controllers').chapter;
 const quizzes=require('../controllers').quiz;
+const qoptions = require ('../controllers').quizOptions;
 
 
 module.exports = (app) => {
@@ -52,4 +53,9 @@ module.exports = (app) => {
     app.post('/api/listbycourseq',quizzes.listbycourseq);
     app.put('/api/updateAdminq/:testId',quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',quizzes.destroyq);
+
+    app.post('/api/addOptions', qoptions.create);
+    app.get('/api/optionsList', qoptions.list);
+    app.post('/api/optionsListquiz', qoptions.getById);
+    app.put('/api/updateQuizOptions', qoptions.update);
 };
