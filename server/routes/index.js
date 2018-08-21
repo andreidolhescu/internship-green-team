@@ -55,20 +55,20 @@ module.exports = (app) => {
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
     app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
 
-    app.post('/api/Dashboard/add', userCheckAuth, Dashboard.create);
+    app.post('/api/Dashboard/add', adminCheckAuth, Dashboard.create);
     
     app.get('/api/register', userController.list);
     app.get('/api/Dashboard', Dashboard.list);
-    app.delete('/api/Dashboard/delete/:idCategory', userCheckAuth, Dashboard.destroy);
+    app.delete('/api/Dashboard/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
 
     app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
     app.get('/api/Courses/:courseId', Courses.getById);
     app.post('/api/Courses/listbyidCategory', Courses.list);
-    app.delete('/api/deleteCourse/:courseId', userCheckAuth, Courses.destroyC);
+    app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
 
     app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
     app.post('/api/Courses/listbyCategoryId', Courses.list);
-    app.put('/api/Courses/:courseId', userCheckAuth, Courses.updateAdminC);
+    app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
 
     app.get('/api/register/:id', userController.retrive); 
     app.post('/api/login', userController.login); 
