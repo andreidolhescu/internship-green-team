@@ -11,7 +11,7 @@ module.exports = {
             .then(cat => res.status(201).send(cat))
             .catch(error => res.status(400).send(error));
     },
-
+   
     // get all entries from Dashboard table
     list (req, res) {
         return Dashboard
