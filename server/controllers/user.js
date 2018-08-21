@@ -203,7 +203,7 @@ module.exports = {
                     const token = jwt.sign({
                         email: user.email,
                         id: user.id,
-                        isAdmin: user.admin
+                        admin: user.admin
                     },
                     process.env.JWT_KEY,
                     {
