@@ -36,7 +36,7 @@ module.exports = (app) => {
 
 
     app.post('/api/register', userController.create);
-    app.get('/api/register',userCheckAuth, userController.list);
+    app.get('/api/register', userController.list);
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
     app.post('/api/login', userController.login);
     app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
