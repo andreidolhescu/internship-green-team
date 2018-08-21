@@ -1,24 +1,31 @@
 module.exports = (sequelize, DataTypes) => {
 
-  const course = sequelize.define('course', {
-    title: {
+  const courses = sequelize.define('courses', {
+    title:{
       type: DataTypes.STRING,
       allowNull: false
     },
-    
+
     description: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNullNull: false
     },
 
     courseImage: {
       type: DataTypes.STRING,
       allowNull: false
     }
-  });
-  
-  course.associate = function(models) {
+  }, {});
+  courses.associate = function(models) {
     // associations can be defined here
+    courses.belongsTo(models.dashboard,{
+      foreignKey:'idCategory',
+      onDelete:'CASCADE'
+    })
   };
-  return course;
+  return courses;
 };
+
+  
+
+

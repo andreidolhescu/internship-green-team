@@ -4,6 +4,20 @@ const userCheckAuth = require('../middleware/user-check-out');
 const testController = require('../controllers').testController;
 const chapters=require('../controllers').chapter;
 const quizzes=require('../controllers').quiz;
+const qoptions = require ('../controllers').quizOptions;
+
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString() + file.originalname);
+    }
+})
+
+const upload = multer({storage: storage});
 
 
 module.exports = (app) => {
@@ -25,6 +39,8 @@ module.exports = (app) => {
 }
 
 const userController = require('../controllers').users;
+const Dashboard = require('../controllers').Dashboard;
+const Courses = require('../controllers').Courses;
 
 module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
@@ -34,15 +50,39 @@ module.exports = (app) => {
     //    message:'Welcome to update;',
     //}));
 
-
     app.post('/api/register', userController.create);
     app.get('/api/register', userController.list);
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
-    app.post('/api/login', userController.login);
+    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
+
+    app.post('/api/Dashboard/add', adminCheckAuth, Dashboard.create);
+    
+    app.get('/api/Dashboard', Dashboard.list);
+    app.delete('/api/Dashboard/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
+
+    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
+    app.get('/api/Courses/:courseId', Courses.getById);
+    app.post('/api/Courses/listbyidCategory', Courses.list);
+    app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
+
     app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
+    app.post('/api/Courses/listbyCategoryId', Courses.list);
+    app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
+
+    app.post('/api/login', userController.login); 
+  
+    app.get('/api/Dashboard/:CategoryId', userCheckAuth, Dashboard.getById);
+    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
+
     app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
+
+    app.post('/api/addOptions', qoptions.create);
+    app.get('/api/optionsList', qoptions.list);
+    app.post('/api/optionsListquiz', qoptions.getById);
+    app.put('/api/updateQuizOptions',adminCheckAuth, qoptions.update);
+    app.delete('/api/deleteOptions',adminCheckAuth, qoptions.destroy);
 
     app.post('/api/listbycourse',userCheckAuth,chapters.listbycourse);
     app.get('/api/listc/:testId',userCheckAuth,chapters.listc);
@@ -56,3 +96,5 @@ module.exports = (app) => {
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
 };
+
+

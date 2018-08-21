@@ -5,10 +5,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       }
-    });
-  
+    }, 
+    {});
     Dashboard.associate = function(models) {
       // associations can be defined here
+      
     };
   
     return Dashboard;

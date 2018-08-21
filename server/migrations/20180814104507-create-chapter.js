@@ -16,10 +16,6 @@ module.exports = {
         validate:{len:[0,500]
         }
       },
-      idCourse:{
-        allowNull: false,
-        type:Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
