@@ -30,9 +30,9 @@ module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
         message: 'Welcome to the Users API! Token',
     }));
-    app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
-        message:'Welcome to update;',
-    }));
+    //app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
+    //    message:'Welcome to update;',
+    //}));
 
 
     app.post('/api/register', userController.create);
@@ -47,12 +47,12 @@ module.exports = (app) => {
     app.post('/api/listbycourse',chapters.listbycourse);
     app.get('/api/listc/:testId',chapters.listc);
     app.post('/api/addchapter',chapters.createc);
-    app.put('/api/updateAdmin/:testId',chapters.updateAdmin);
-    app.delete('/api/deletechapter/:testId', chapters.destroy);
+    app.put('/api/updateAdmin/:testId',adminCheckAuth,chapters.updateAdmin);
+    app.delete('/api/deletechapter/:testId',adminCheckAuth, chapters.destroy);
 
     app.post('/api/addquiz',quizzes.createq);
     app.get('/api/listq/:testId',quizzes.getByIdq);
     app.post('/api/listbychapterq',quizzes.listbychapterq);
-    //app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
-    app.delete('/api/deletequiz/:testId',quizzes.destroyq);
+    app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
+    app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
 };

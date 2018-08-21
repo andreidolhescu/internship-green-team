@@ -27,7 +27,7 @@ module.exports = {
         let idChapter=req.body.idChapter;
         if (!idChapter) {
             return res.status(400).send({
-                message: "Id course required!"
+                message: "Id chapter required!"
             });
         }
          return Quizzes
