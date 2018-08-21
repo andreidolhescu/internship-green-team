@@ -1,16 +1,14 @@
-const course = require('../models').course;
-const Dashboard = require('../models').Dashboard;
-
+const courses = require('../models').courses;
 
 module.exports = {
     //add new course
     create (req, res) {
-        return course
+        return courses
             .create({
                 title: req.body.title,
                 description: req.body.description,
                 courseImage: req.file.path,
-                CategoryId: req.body.CategoryId
+                idCategory: req.body.idCategory
             })
             .then(todo => res.status(201).send(todo))
             .catch(error => res.status(400).send(error));
@@ -18,7 +16,7 @@ module.exports = {
 
     // get a course by id
     getById (req, res) {
-        return course
+        return courses
             .findById(req.params.courseId)
             .then(todo => {
                 if (!todo) {
@@ -33,15 +31,15 @@ module.exports = {
 
     //list all courses by category id
     list (req, res) {
-        let CategoryId = req.body.CategoryId;
-        if(!CategoryId) {
+        let idCategory = req.body.idCategory;
+        if(!idCategory) {
             return res.status(404).send({
               message: 'Category Id required',
             });
           }
-        return course.findAll({
+        return courses.findAll({
             where: {
-                CategoryId: CategoryId
+                idCategory:idCategory
             }
         })
         .then(cat => res.status(201).send(cat))
@@ -49,6 +47,69 @@ module.exports = {
 
     },
     
+    updateAdminC (req, res) {
+        return courses
+            .findById(req.params.courseId)
+            .then(course => {
+                if (!course) {
+                    return res.status(404).send({
+                        message: 'Course Not Found',
+                    });
+                }
+                if (!req.body.title) {
+                    return res.status(400).send({
+                        message: "Title required!"
+                    });
+                }
+                if (!req.body.description) {
+                    return res.status(400).send({
+                        message: "Description required!"
+                    });
+                }
+                /*if(!req.file.path) {
+                    return res.status(400).send({
+                        message: "Image path required!"
+                    });
+                }*/
+                if(!req.body.idCategory) {
+                    return res.status(400).send({
+                        message: "idCategory required!"
+                    });
+                }
+                return course
+                    .update({
+                         title: req.body.title || course.title,
+                         description: req.body.description || course.description,
+                         //courseImage: req.file.path || course.courseImage,
+                         idCategory: req.body.idCategory || course.idCategory
+                    })
+                    .then(course =>{ 
+                        if (!course) {
+                            return res.status(404).send({
+                                message: 'Course Not Found',
+                            });
+                        }else res.status(201).send(course)})
+                    .catch((error) => res.status(400).send(error));
+            })
+            .catch((error) => res.status(400).send(error));
+    },
     
+    destroyC (req, res) {
+        return courses
+            .findById(req.params.courseId)
+            .then(course => {
+                if (!course) {
+                    return res.status(404).send({
+                        message: 'Course not Found',
+                    });
+                }
+
+                return course
+                    .destroy()
+                    .then(() => res.status(200).send("Success"))
+                    .catch((error) => res.status(400).send(error));
+            })
+            .catch((error) => res.status(400).send(error));
+    }
 
 }
