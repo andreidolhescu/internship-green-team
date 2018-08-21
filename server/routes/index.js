@@ -36,23 +36,23 @@ module.exports = (app) => {
 
 
     app.post('/api/register', userController.create);
-    app.get('/api/register', userController.list);
-    app.get('/api/register/:id', userController.retrive);
+    app.get('/api/register',userCheckAuth, userController.list);
+    app.get('/api/register/:id',userCheckAuth, userController.retrive);
     app.post('/api/login', userController.login);
-    app.post('/api/forgotPassword', userController.forgotPassword);
+    app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
     app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 
-    app.post('/api/listbycourse',chapters.listbycourse);
-    app.get('/api/listc/:testId',chapters.listc);
-    app.post('/api/addchapter',chapters.createc);
+    app.post('/api/listbycourse',userCheckAuth,chapters.listbycourse);
+    app.get('/api/listc/:testId',userCheckAuth,chapters.listc);
+    app.post('/api/addchapter',userCheckAuth,chapters.createc);
     app.put('/api/updateAdmin/:testId',adminCheckAuth,chapters.updateAdmin);
     app.delete('/api/deletechapter/:testId',adminCheckAuth, chapters.destroy);
 
-    app.post('/api/addquiz',quizzes.createq);
-    app.get('/api/listq/:testId',quizzes.getByIdq);
-    app.post('/api/listbychapterq',quizzes.listbychapterq);
+    app.post('/api/addquiz',userCheckAuth,quizzes.createq);
+    app.get('/api/listq/:testId',userCheckAuth,quizzes.getByIdq);
+    app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
 };

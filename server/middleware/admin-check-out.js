@@ -12,10 +12,9 @@ module.exports = (req, res, next) => {
             } else {
                 if(decoded.admin){
                     req.decoded = decoded;
-                    next();
+                    return next();
                 }
-                res.send('Sorry you are not an admin!');
-                next();
+                return res.send('Sorry you are not an admin!');
             }
         });
     } else {
