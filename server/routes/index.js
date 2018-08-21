@@ -30,6 +30,10 @@ module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
         message: 'Welcome to the Users API! Token',
     }));
+    app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
+        message:'Welcome to update;',
+    }));
+
 
     app.post('/api/register', userController.create);
     app.get('/api/register', userController.list);
@@ -48,7 +52,7 @@ module.exports = (app) => {
 
     app.post('/api/addquiz',quizzes.createq);
     app.get('/api/listq/:testId',quizzes.getByIdq);
-    app.post('/api/listbycourseq',quizzes.listbycourseq);
-    app.put('/api/updateAdminq/:testId',quizzes.updateAdminq);
+    app.post('/api/listbychapterq',quizzes.listbychapterq);
+    //app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',quizzes.destroyq);
 };
