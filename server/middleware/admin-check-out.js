@@ -15,6 +15,7 @@ module.exports = (req, res, next) => {
                     return next();
                 }
                 return res.send('Sorry you are not an admin!');
+
             }
         });
     } else {

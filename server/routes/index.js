@@ -53,14 +53,22 @@ module.exports = (app) => {
     app.post('/api/register', userController.create);
 
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
-    app.post('/api/Dashboard/add', Dashboard.create);
     app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
 
+    app.post('/api/Dashboard/add', userCheckAuth, Dashboard.create);
+    
     app.get('/api/register', userController.list);
     app.get('/api/Dashboard', Dashboard.list);
+    app.delete('/api/Dashboard/delete/:idCategory', userCheckAuth, Dashboard.destroy);
+
+    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
+    app.get('/api/Courses/:courseId', Courses.getById);
+    app.post('/api/Courses/listbyidCategory', Courses.list);
+    app.delete('/api/deleteCourse/:courseId', userCheckAuth, Courses.destroyC);
 
     app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
     app.post('/api/Courses/listbyCategoryId', Courses.list);
+    app.put('/api/Courses/:courseId', userCheckAuth, Courses.updateAdminC);
 
     app.get('/api/register/:id', userController.retrive); 
     app.post('/api/login', userController.login); 
@@ -80,5 +88,6 @@ module.exports = (app) => {
     app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
+
 };
 

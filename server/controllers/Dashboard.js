@@ -58,7 +58,7 @@ module.exports = {
 
     destroy (req, res) {
         return Dashboard
-            .findById(req.params.CategoryId)
+            .findById(req.params.idCategory)
             .then(category => {
                 if (!category) {
                     return res.status(404).send({
@@ -68,7 +68,7 @@ module.exports = {
   
                 return category
                     .destroy()
-                    .then(() => res.status(200).send())
+                    .then(() => res.status(200).send("Succes"))
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
