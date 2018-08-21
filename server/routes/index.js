@@ -1,6 +1,7 @@
 const cors = require('cors'); // do not remove this
 const checkAuth = require('../middleware/check-out');
 const testController = require('../controllers').testController;
+const quizOptionController = require('../controllers').QuizOptionsController;
 
 
 module.exports = (app) => {
@@ -36,4 +37,8 @@ module.exports = (app) => {
     app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
+
+    app.post('/api/addOptions', quizOptionController.create);
+    app.get('/api/optionsList', quizOptionController.list);
+    app.post('/api/optionsListquiz', quizOptionController.getById);
 };
