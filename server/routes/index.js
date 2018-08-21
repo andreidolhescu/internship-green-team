@@ -4,6 +4,7 @@ const userCheckAuth = require('../middleware/user-check-out');
 const testController = require('../controllers').testController;
 const chapters=require('../controllers').chapter;
 const quizzes=require('../controllers').quiz;
+const qoptions = require ('../controllers').quizOptions;
 
 const multer = require('multer');
 
@@ -78,6 +79,12 @@ module.exports = (app) => {
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 
+    app.post('/api/addOptions', qoptions.create);
+    app.get('/api/optionsList', qoptions.list);
+    app.post('/api/optionsListquiz', qoptions.getById);
+    app.put('/api/updateQuizOptions',adminCheckAuth, qoptions.update);
+    app.delete('/api/deleteOptions',adminCheckAuth, qoptions.destroy);
+
     app.post('/api/listbycourse',userCheckAuth,chapters.listbycourse);
     app.get('/api/listc/:testId',userCheckAuth,chapters.listc);
     app.post('/api/addchapter',userCheckAuth,chapters.createc);
@@ -89,6 +96,6 @@ module.exports = (app) => {
     app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
-
 };
+
 
