@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('quizOptions', {
@@ -8,29 +7,16 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      option1: {
+      answer: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
           len: [0,70]
         }
       },
-      option2: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [0,70]
-        }
-      },
-      option3: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [0,70]
-        }
-      },
-      idQuiz: {
-       type: Sequelize.INTEGER
+      correct: {
+       type: Sequelize.BOOLEAN,
+       defaultValue: false
       },
       createdAt: {
         allowNull: false,
@@ -39,7 +25,16 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      quizzid: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Quizzes',
+          key: 'id',
+          as: 'quizzid',
+        },
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

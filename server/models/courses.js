@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-  const courses = sequelize.define('courses', {
+  const Courses = sequelize.define('Courses', {
     title:{
       type: DataTypes.STRING,
       allowNull: false
@@ -16,17 +16,18 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
-    idCategory: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    }
-  }, {});
-  courses.associate = function(models) {
+  });
+
+  Courses.associate = (models) => {
     // associations can be defined here
+    Courses.belongsTo(models.Dashboard, {
+      foreignKey: 'dashboardid',
+      onDelete: 'CASCADE',
+    });
+
+    Courses.hasMany(models.Chapters, {
+      foreignKey: 'coursesid',
+    });
   };
-  return courses;
+  return Courses;
 };
-
-  
-
-

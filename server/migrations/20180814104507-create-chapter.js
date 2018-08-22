@@ -1,6 +1,5 @@
-'use strict';
 module.exports = {
-  up: (queryInterface, Sequelize) => {
+    up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Chapters', {
       id: {
         allowNull: false,
@@ -16,10 +15,6 @@ module.exports = {
         validate:{len:[0,500]
         }
       },
-      idCourse:{
-        allowNull: false,
-        type:Sequelize.INTEGER
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -27,7 +22,16 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      coursesid: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Courses',
+          key: 'id',
+          as: 'coursesid',
+        },
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

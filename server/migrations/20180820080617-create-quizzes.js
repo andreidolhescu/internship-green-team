@@ -1,4 +1,3 @@
-'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Quizzes', {
@@ -11,10 +10,6 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
-      idChapter:{
-        type:Sequelize.INTEGER,
-        allowNull:false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -22,7 +17,16 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      chaptersid: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Chapters',
+          key: 'id',
+          as: 'chaptersid',
+        },
+      },
     });
   },
   down: (queryInterface, Sequelize) => {

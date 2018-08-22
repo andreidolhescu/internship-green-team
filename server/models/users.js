@@ -1,10 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  let Users = sequelize.define('Users', {
-    // userId: {
-    //   type: DataTypes.INTEGER,
-    //   allowNull: false
-    // },
+  const Users = sequelize.define('Users', {
+   
     firstName: {
       type: DataTypes.STRING,
       allowNull: false
@@ -37,12 +34,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     }
   });
-  Users.associate = function(models) {
+   Users.associate = function(models) {
     // associations can be defined here
-    Users.hasMany(models.course, {
+    /*Users.hasMany(models.course, {
       foreignKey: 'userId',
       as: 'courses'
-    });
+    });*/
   };
   return Users;
 };

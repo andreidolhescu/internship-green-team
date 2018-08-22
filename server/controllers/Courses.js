@@ -1,4 +1,4 @@
-const courses = require('../models').courses;
+const Courses = require('../models').Courses;
 
 module.exports = {
     //add new course

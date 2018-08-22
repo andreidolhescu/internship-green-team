@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('courses', {
+    return queryInterface.createTable('Courses', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -21,10 +21,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      idCategory: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -32,10 +28,19 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      categoryid: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        reference: {
+          model: 'Dashboard',
+          key: 'id',
+          as: 'categoryid',
+        },
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('courses');
+    return queryInterface.dropTable('Courses');
   }
 };

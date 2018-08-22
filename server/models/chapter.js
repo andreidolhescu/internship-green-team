@@ -1,4 +1,3 @@
-'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Chapters = sequelize.define('Chapters', {
     title: {
@@ -9,29 +8,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING(500),
       allowNull: false
     },
-    idCourse:{
-      type:DataTypes.INTEGER,
-      allowNull: false
-    }
 
   });
-  Chapters.associate = function(models) {
+
+  Chapters.associate = (models) => {
     // associations can be defined here
      
-    // Chapter.belongsTo(models.Course, {
-    //   foreignKey: 'courseId',
-    //   onDelete: 'CASCADE'
-    // });
+    Chapters.belongsTo(models.Courses, {
+      foreignKey: 'coursesid',
+      onDelete: 'CASCADE',
+    });
 
-    // Chapter.hasMany(models.Question, {
-    //   foreignKey: 'chapterId',
-    //   as: 'question'
-    // });
-
-    // Chapter.hasMany(models.Answer, {
-    //   foreignKey: 'chapterId',
-    //   as: 'answers'
-    // });
+    Chapters.hasMany(models.Quizzes, {
+      foreignKey: 'chaptersid',
+    });
   };
+
   return Chapters;
 };
