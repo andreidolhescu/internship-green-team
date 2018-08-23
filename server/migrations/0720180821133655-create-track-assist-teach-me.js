@@ -43,24 +43,16 @@ module.exports = {
           as:'idCourse',
         },
       },
-      idChapter:{
+      idProcess:{
         type:Sequelize.INTEGER,
         onDelete:'CASCADE',
         references:{
-          model:'Chapters',
+          model:'Answers',
           key:'id',
-          as:'idChapter',
+          as:'idProcess',
         }
       },
-      idQuiz:{
-        type:Sequelize.INTEGER,
-        onDelete:'CASCADE',
-        references:{
-          model:'Quizzes',
-          key:'id',
-          as:'idQuiz',
-        }
-      },
+
     });
   },
   down: (queryInterface, Sequelize) => {

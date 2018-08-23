@@ -1,4 +1,4 @@
-const Dashboard = require('../models').Dashboard;
+const Dashboard = require('../models').Dashboards;
 
 module.exports = {
     // add new category

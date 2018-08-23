@@ -61,8 +61,8 @@ module.exports = (app) => {
     app.delete('/api/register/:id', userController.destroy);
 
     //Course categories
-    app.post('/api/Category/add', adminCheckAuth, Dashboard.create);
-    app.get('/api/Category', userCheckAuth, Dashboard.list);
+    app.post('/api/Category/add', Dashboard.create);
+    app.get('/api/Category', Dashboard.list);
     app.get('/api/Category/:CategoryId', userCheckAuth, Dashboard.getById);
     app.put('/api/Category/:CategoryId', Dashboard.update);
     app.delete('/api/Category/delete/:idCategory', adminCheckAuth, Dashboard.destroy);

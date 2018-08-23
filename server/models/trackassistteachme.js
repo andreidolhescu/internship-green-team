@@ -19,17 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     TrackAssistTeachMe.belongsTo(models.Chapters,{
-      foreignKey:'idChapter',
-      onDelete:'CASCADE',
-    });
-
-    TrackAssistTeachMe.belongsTo(models.Quizzes,{
-      foreignKey:'idQuiz',
-      onDelete:'CASCADE',
-    });
-
-    TrackAssistTeachMe.belongsTo(models.quizOptions,{
-      foreignKey:'idOption',
+      foreignKey:'idProcess',
       onDelete:'CASCADE',
     });
 
