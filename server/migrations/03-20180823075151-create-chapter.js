@@ -1,36 +1,29 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('quizOptions', {
+    return queryInterface.createTable('Chapters', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      option1: {
+      name: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [0,70]
-        }
+        allowNull: false
       },
-      option2: {
+      content: {
         type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [0,70]
-        }
+        allowNull: false
       },
-      option3: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [0,70]
-        }
-      },
-      idQuiz: {
-       type: Sequelize.INTEGER
+      courseId:{
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Courses',
+          key: 'id',
+          as: 'courseId'
+        },
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +36,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('quizOptions');
+    return queryInterface.dropTable('Chapters');
   }
 };

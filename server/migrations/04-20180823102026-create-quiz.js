@@ -13,7 +13,12 @@ module.exports = {
       },
       idChapter:{
         type:Sequelize.INTEGER,
-        allowNull:false
+        onDelete:'CASCADE',
+        references:{
+          model:'Chapters',
+          key:'id',
+          as:'idChapter',
+        }
       },
       createdAt: {
         allowNull: false,
