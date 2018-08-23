@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Courses', {
+    return queryInterface.createTable('Course', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,15 +12,38 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      description: {
+      small_description: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          len: [0,70]
+        }
+      },
+      long_description: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          len: [0,150]
+        }
+      },
+      tags: {
         type: Sequelize.STRING,
         allowNull: false
       },
-  
       courseImage: {
         type: Sequelize.STRING,
         allowNull: false
       },
+      idCategory: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Categories',
+          key: 'id',
+          as: 'idCategory'
+        }
+      },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -29,18 +52,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      categoryid: {
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        reference: {
-          model: 'Dashboard',
-          key: 'id',
-          as: 'categoryid',
-        },
-      },
+    
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Courses');
+    return queryInterface.dropTable('Course');
   }
 };

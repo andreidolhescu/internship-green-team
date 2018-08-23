@@ -3,20 +3,25 @@ const Courses = require('../models').Courses;
 module.exports = {
     //add new course
     create (req, res) {
-        return courses
-            .create({
+        return Courses
+           .create({
                 title: req.body.title,
                 description: req.body.description,
                 courseImage: req.file.path,
-                idCategory: req.body.idCategory
+                small_description: req.body.small_description,
+                long_description: req.body.long_description,
+                tags: req.body.tags,
+                idCategory: req.params.idCategory
             })
-            .then(todo => res.status(201).send(todo))
+            .then(course => res.status(201).send(course))
             .catch(error => res.status(400).send(error));
+            
     },
+
 
     // get a course by id
     getById (req, res) {
-        return courses
+        return Courses
             .findById(req.params.courseId)
             .then(todo => {
                 if (!todo) {
@@ -48,7 +53,7 @@ module.exports = {
     },
     
     updateAdminC (req, res) {
-        return courses
+        return Courses
             .findById(req.params.courseId)
             .then(course => {
                 if (!course) {
@@ -66,11 +71,11 @@ module.exports = {
                         message: "Description required!"
                     });
                 }
-                /*if(!req.file.path) {
+                if(!req.file.path) {
                     return res.status(400).send({
                         message: "Image path required!"
                     });
-                }*/
+                }
                 if(!req.body.idCategory) {
                     return res.status(400).send({
                         message: "idCategory required!"
@@ -95,7 +100,7 @@ module.exports = {
     },
     
     destroyC (req, res) {
-        return courses
+        return Courses
             .findById(req.params.courseId)
             .then(course => {
                 if (!course) {

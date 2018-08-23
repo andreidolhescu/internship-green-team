@@ -1,10 +1,11 @@
-const Dashboard = require('../models').Dashboard;
+const Categories = require('../models').Categories;
+const Courses = require('../models').Courses;
 
 module.exports = {
     // add new category
     create (req, res) {
 
-        return Dashboard
+        return Categories
             .create({
                 title: req.body.title
             })
@@ -12,17 +13,28 @@ module.exports = {
             .catch(error => res.status(400).send(error));
     },
    
-    // get all entries from Dashboard table
+    // get all entries from Categories table
     list (req, res) {
-        return Dashboard
-            .all()
-            .then(cat => res.status(201).send(cat))
-            .catch(error => res.status(400).send(error));
+        console.log("aici \n\n\n\n");
+        return Categories
+            .findAll({
+                include: [{
+                    model: Courses,
+                    // as: 'courseItems' 
+                }]
+            })
+            .then(categories => res.status(201).send(categories))
+            .catch(error => {
+                console.log("Eroare", error)
+               return  res.status(400).send(error)
+
+            });
+
     },
 
     // update a category
     update (req, res) {
-        return Dashboard
+        return Category
             .findById(req.params.CategoryId)
             .then(category => {
                 if (!category) {
@@ -43,7 +55,7 @@ module.exports = {
 
     // get a category by id
     getById (req, res) {
-        return Dashboard
+        return Category
             .findById(req.params.CategoryId)
             .then(category => {
                 if (!category) {
@@ -57,7 +69,7 @@ module.exports = {
     },
 
     destroy (req, res) {
-        return Dashboard
+        return Category
             .findById(req.params.idCategory)
             .then(category => {
                 if (!category) {

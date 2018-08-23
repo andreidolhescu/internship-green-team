@@ -16,12 +16,34 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
 
+    small_description: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    long_description: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    tags: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    idCategory: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Categories',
+        key: 'id',
+        as: 'idCategory'
+      }
+    }
+
   });
 
   Courses.associate = (models) => {
     // associations can be defined here
-    Courses.belongsTo(models.Dashboard, {
-      foreignKey: 'dashboardid',
+    Courses.belongsTo(models.Categories, {
+      foreignKey: 'idCategory',
       onDelete: 'CASCADE',
     });
 

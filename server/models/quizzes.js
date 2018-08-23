@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   Quizzes.associate = (models) => {
     // associations can be defined here
     Quizzes.belongsTo(models.Chapters, {
-      foreignKey: 'chapterid',
+      foreignKey: 'chaptersid',
       onDelete: 'CASCADE',
     });
 

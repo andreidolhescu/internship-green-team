@@ -39,8 +39,8 @@ module.exports = (app) => {
 }
 
 const userController = require('../controllers').users;
-const Dashboard = require('../controllers').Dashboard;
-const Courses = require('../controllers').Courses;
+const CategoryController = require('../controllers').CategoryController;
+const CourseController = require('../controllers').CategoryController;
 
 module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
@@ -61,18 +61,18 @@ module.exports = (app) => {
     app.delete('/api/register/:id', userController.destroy);
 
     //Course categories
-    app.post('/api/Dashboard/add', adminCheckAuth, Dashboard.create);
-    app.get('/api/Dashboard', userCheckAuth, Dashboard.list);
-    app.get('/api/Dashboard/:CategoryId', userCheckAuth, Dashboard.getById);
-    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
-    app.delete('/api/Dashboard/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
+    app.post('/api/Category/add', adminCheckAuth, CategoryController.create);
+    app.get('/api/Category', userCheckAuth, CategoryController.list);
+    app.get('/api/Category/:CategoryId', userCheckAuth, CategoryController.getById);
+    app.put('/api/Category/:CategoryId', CategoryController.update);
+    app.delete('/api/Category/delete/:idCategory', adminCheckAuth, CategoryController.destroy);
 
     //Courses
-    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
-    app.post('/api/Courses/listbyidCategory', Courses.list);
-    app.get('/api/Courses/:courseId', userCheckAuth, Courses.getById);
-    app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
-    app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
+    app.post('/api/Courses/:idCategory', upload.single('courseImage'), CourseController.create);
+    app.post('/api/Courses/listbyidCategory', CourseController.list);
+    app.get('/api/Courses/:courseId', userCheckAuth, CourseController.getById);
+    //app.put('/api/Courses/:courseId', adminCheckAuth, CourseController.updateAdminC);
+    //app.delete('/api/deleteCourse/:courseId', adminCheckAuth, CourseController.destroyC);
 
     //Quiz options
     app.post('/api/addOptions', qoptions.create);
