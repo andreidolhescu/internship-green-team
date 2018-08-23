@@ -61,11 +61,11 @@ module.exports = (app) => {
     app.delete('/api/register/:id', userController.destroy);
 
     //Course categories
-    app.post('/api/Dashboard/add', adminCheckAuth, Dashboard.create);
-    app.get('/api/Dashboard', userCheckAuth, Dashboard.list);
-    app.get('/api/Dashboard/:CategoryId', userCheckAuth, Dashboard.getById);
-    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
-    app.delete('/api/Dashboard/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
+    app.post('/api/Category/add', adminCheckAuth, Dashboard.create);
+    app.get('/api/Category', userCheckAuth, Dashboard.list);
+    app.get('/api/Category/:CategoryId', userCheckAuth, Dashboard.getById);
+    app.put('/api/Category/:CategoryId', Dashboard.update);
+    app.delete('/api/Category/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
 
     //Courses
     app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
@@ -75,11 +75,11 @@ module.exports = (app) => {
     app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
 
     //Quiz options
-    app.post('/api/addOptions', qoptions.create);
     app.get('/api/optionsList', qoptions.list);
     app.post('/api/optionsListquiz', qoptions.getById);
-    app.put('/api/updateQuizOptions',adminCheckAuth, qoptions.update);
-    app.delete('/api/deleteOptions',adminCheckAuth, qoptions.destroy);
+    app.put('/api/updateQuizOptions', qoptions.update);
+    app.delete('/api/deleteOptions/:idQuiz/items/:id', qoptions.destroy);
+    app.post('/api/addquiz/:idQuiz/items',qoptions.create);
 
     //Chapters
     app.post('/api/listbycourse',userCheckAuth,chapters.listbycourse);
@@ -89,11 +89,11 @@ module.exports = (app) => {
     app.delete('/api/deletechapter/:testId',adminCheckAuth, chapters.destroy);
 
     //Quizzes
-    app.post('/api/addquiz',userCheckAuth,quizzes.createq);
-    app.get('/api/listq/:testId',userCheckAuth,quizzes.getByIdq);
-    app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);
-    app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
-    app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
+    app.post('/api/addchapter/:idChapter/items',quizzes.createq);
+    app.get('/api/listq',quizzes.listq);
+    app.delete('/api/deletequiz/:idQuiz',quizzes.destroyq);
+    app.get('/api/listbyid/:idQuiz',quizzes.retrieve);
+    app.put('/api/updateq/:idQuiz',quizzes.update);
 };
 
 

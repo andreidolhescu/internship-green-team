@@ -8,7 +8,7 @@ module.exports = {
                 title: req.body.title,
                 description: req.body.description,
                 courseImage: req.file.path,
-                //idCategory: req.body.idCategory
+                //idCategory: req.params.idCategory
             })
             .then(todo => res.status(201).send(todo))
             .catch(error => res.status(400).send(error));
