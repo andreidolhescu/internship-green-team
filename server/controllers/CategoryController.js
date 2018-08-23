@@ -1,5 +1,5 @@
 const Categories = require('../models').Categories;
-const Courses = require('../models').Courses;
+const Course = require('../models').Course;
 
 module.exports = {
     // add new category
@@ -19,8 +19,8 @@ module.exports = {
         return Categories
             .findAll({
                 include: [{
-                    model: Courses,
-                    // as: 'courseItems' 
+                    model: Course,
+                    as: 'courseItems' 
                 }]
             })
             .then(categories => res.status(201).send(categories))

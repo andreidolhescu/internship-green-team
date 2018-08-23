@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   Chapters.associate = (models) => {
     // associations can be defined here
      
-    Chapters.belongsTo(models.Courses, {
+    Chapters.belongsTo(models.Course, {
       foreignKey: 'coursesid',
       onDelete: 'CASCADE',
     });

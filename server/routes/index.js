@@ -40,7 +40,7 @@ module.exports = (app) => {
 
 const userController = require('../controllers').users;
 const CategoryController = require('../controllers').CategoryController;
-const CourseController = require('../controllers').CategoryController;
+const CourseController = require('../controllers').CourseController;
 
 module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
@@ -69,9 +69,9 @@ module.exports = (app) => {
 
     //Courses
     app.post('/api/Courses/:idCategory', upload.single('courseImage'), CourseController.create);
-    app.post('/api/Courses/listbyidCategory', CourseController.list);
+    app.get('/api/Courses/listbyidCategory/:idCategory', CourseController.list);
     app.get('/api/Courses/:courseId', userCheckAuth, CourseController.getById);
-    //app.put('/api/Courses/:courseId', adminCheckAuth, CourseController.updateAdminC);
+    app.put('/api/Courses/:courseId', adminCheckAuth, CourseController.updateAdminC);
     //app.delete('/api/deleteCourse/:courseId', adminCheckAuth, CourseController.destroyC);
 
     //Quiz options
