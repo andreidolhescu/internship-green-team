@@ -6,7 +6,8 @@ module.exports = {
 
         return Dashboard
             .create({
-                title: req.body.title
+                title: req.body.title,
+                //idCategory:req.body.idCategory
             })
             .then(cat => res.status(201).send(cat))
             .catch(error => res.status(400).send(error));
@@ -23,7 +24,7 @@ module.exports = {
     // update a category
     update (req, res) {
         return Dashboard
-            .findById(req.params.CategoryId)
+            .findById(req.params.idCategory)
             .then(category => {
                 if (!category) {
                     return res.status(404).send({
@@ -33,7 +34,8 @@ module.exports = {
   
                 return category
                     .update({
-                       title: req.body.title
+                       title: req.body.title,
+                       idCategory:req.body.idCategory
                     })
                     .then(() => res.status(200).send(category))
                     .catch((error) => res.status(400).send(error));
@@ -44,7 +46,7 @@ module.exports = {
     // get a category by id
     getById (req, res) {
         return Dashboard
-            .findById(req.params.CategoryId)
+            .findById(req.params.idCategory)
             .then(category => {
                 if (!category) {
                   return res.status(404).send({

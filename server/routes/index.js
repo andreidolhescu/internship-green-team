@@ -50,46 +50,45 @@ module.exports = (app) => {
     //    message:'Welcome to update;',
     //}));
 
+    //User
     app.post('/api/register', userController.create);
-    app.get('/api/register', userController.list);
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
-    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
-
-    app.post('/api/Dashboard/add', adminCheckAuth, Dashboard.create);
-    
-    app.get('/api/Dashboard', Dashboard.list);
-    app.delete('/api/Dashboard/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
-
-    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
-    app.get('/api/Courses/:courseId', Courses.getById);
-    app.post('/api/Courses/listbyidCategory', Courses.list);
-    app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
-
+    app.get('/api/register', userController.list);
     app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
-    app.post('/api/Courses/listbyCategoryId', Courses.list);
-    app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
-
     app.post('/api/login', userController.login); 
-  
-    app.get('/api/Dashboard/:CategoryId', userCheckAuth, Dashboard.getById);
-    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
-
     app.post('/api/reset/:passwordToken', userController.reset);
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 
+    //Course categories
+    app.post('/api/Dashboard/add', adminCheckAuth, Dashboard.create);
+    app.get('/api/Dashboard', userCheckAuth, Dashboard.list);
+    app.get('/api/Dashboard/:CategoryId', userCheckAuth, Dashboard.getById);
+    app.put('/api/Dashboard/:CategoryId', Dashboard.update);
+    app.delete('/api/Dashboard/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
+
+    //Courses
+    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
+    app.post('/api/Courses/listbyidCategory', Courses.list);
+    app.get('/api/Courses/:courseId', userCheckAuth, Courses.getById);
+    app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
+    app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
+
+    //Quiz options
     app.post('/api/addOptions', qoptions.create);
     app.get('/api/optionsList', qoptions.list);
     app.post('/api/optionsListquiz', qoptions.getById);
     app.put('/api/updateQuizOptions',adminCheckAuth, qoptions.update);
     app.delete('/api/deleteOptions',adminCheckAuth, qoptions.destroy);
 
+    //Chapters
     app.post('/api/listbycourse',userCheckAuth,chapters.listbycourse);
     app.get('/api/listc/:testId',userCheckAuth,chapters.listc);
     app.post('/api/addchapter',userCheckAuth,chapters.createc);
     app.put('/api/updateAdmin/:testId',adminCheckAuth,chapters.updateAdmin);
     app.delete('/api/deletechapter/:testId',adminCheckAuth, chapters.destroy);
 
+    //Quizzes
     app.post('/api/addquiz',userCheckAuth,quizzes.createq);
     app.get('/api/listq/:testId',userCheckAuth,quizzes.getByIdq);
     app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);

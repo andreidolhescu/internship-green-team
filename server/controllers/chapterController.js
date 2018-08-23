@@ -7,7 +7,7 @@ module.exports = {
             .create({
             title: req.body.title,
             content:req.body.content,
-            idCourse:req.body.idCourse   
+            //idCourse:req.body.idCourse   
             })
             .then(chapter => res.status(201).send(chapter))
             .catch(error => res.status(400).send(error));

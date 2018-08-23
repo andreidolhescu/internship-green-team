@@ -15,13 +15,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     }
-  }, {});
-  courses.associate = function(models) {
+  },);
+  courses.associate = (models)=> {
     // associations can be defined here
-    courses.belongsTo(models.dashboard,{
+    courses.belongsTo(models.Dashboards,{
       foreignKey:'idCategory',
-      onDelete:'CASCADE'
-    })
+      onDelete:'CASCADE',
+    });
+    courses.hasMany(models.Chapters,{
+      foreignKey:'idChapter',
+      as:'coursesItems',
+    });
   };
   return courses;
 };

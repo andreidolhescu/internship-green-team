@@ -4,10 +4,9 @@ module.exports = {
     create (req, res) {
         return QuizOptions
             .create({
-                option1: req.body.option1,
-                option2: req.body.option2,
-                option3: req.body.option3,
-                idQuiz: req.body.idQuiz
+                text:req.body.text,
+                correct:req.body.correct,
+                //idQuiz: req.body.idQuiz
             })
             .then(quizoption => res.status(201).send(quizoption))
             .catch(error => res.status(400).send(error.message));
@@ -55,9 +54,9 @@ module.exports = {
 
                 return quizoption 
                     .update({
-                        option1: req.body.option1 || quizoption.option1,
-                        option2: req.body.option2 || quizoption.option2,
-                        option3: req.body.option3 || quizoption.option3
+                        text: req.body.text || quizoption.text,
+                        correct: req.body.correct || quizoption.correct,
+                        idQuiz: req.body.idQuiz || quizoption.idQuiz
                     })
                     .then(quizoption => {
                         if (!quizoption) {

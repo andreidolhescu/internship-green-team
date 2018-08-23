@@ -1,12 +1,24 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('TrackAssistTeachMes', {
+    return queryInterface.createTable('Quizzes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      content: {
+        type: Sequelize.STRING
+      },
+      idChapter:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Chapters',
+          key:'id',
+          as:'idChapter',
+        }
       },
       createdAt: {
         allowNull: false,
@@ -19,6 +31,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('TrackAssistTeachMes');
+    return queryInterface.dropTable('Quizzes');
   }
 };

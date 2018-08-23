@@ -19,6 +19,15 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
+      idQuiz:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Quizzes',
+          key:'id',
+          as:'idQuiz',
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

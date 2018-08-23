@@ -1,16 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
 
-    const Dashboard = sequelize.define('Dashboard', {
+    const Dashboards = sequelize.define('Dashboards', {
       title: {
         type: DataTypes.STRING,
         allowNull: false
       }
     }, 
-    {});
-    Dashboard.associate = function(models) {
+    );
+    Dashboards.associate = (models)=> {
       // associations can be defined here
-      
+      Dashboards.hasMany(models.courses,{
+        foreignKey:'idCategory',
+        as:'categoryItems',
+      });
     };
   
-    return Dashboard;
+    return Dashboards;
   };

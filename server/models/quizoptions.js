@@ -12,15 +12,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     }
-  }, {});
+  }, 
+);
   
   
   quizOptions.associate = function(models) {
     // associations can be defined here
-    quizOptions.belongsTo(models.quizzes,{
+    quizOptions.belongsTo(models.Quizzes,{
       foreignKey:'idQuiz',
-      onDelete:'CASCADE'
-    })
+      onDelete:'CASCADE',
+    });
   };
   return quizOptions;
 };

@@ -1,31 +1,38 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const TrackAssistTeachMe = sequelize.define('TrackAssistTeachMe', {});
-  TrackAssistTeachMe.associate = function(models) {
-    TrackAssistTeachMe.belogsTo(models.users,{
+  TrackAssistTeachMe.associate = (models) =>{
+
+    TrackAssistTeachMe.belongsTo(models.Users,{
       foreignKey:'userId',
       onDelete:'CASCADE'
     });
-    TrackAssistTeachMe.belogsTo(models.dashboard,{
+
+    TrackAssistTeachMe.belongsTo(models.Dashboards,{
       foreignKey:'idCategory',
       onDelete:'CASCADE'
     });
-    TrackAssistTeachMe.belogsTo(models.courses,{
+
+    TrackAssistTeachMe.belongsTo(models.courses,{
       foreignKey:'idCourse',
       onDelete:'CASCADE'
     });
-    TrackAssistTeachMe.belogsTo(models.chapter,{
+
+    TrackAssistTeachMe.belongsTo(models.Chapters,{
       foreignKey:'idChapter',
-      onDelete:'CASCADE'
+      onDelete:'CASCADE',
     });
-    TrackAssistTeachMe.belogsTo(models.quizzes,{
+
+    TrackAssistTeachMe.belongsTo(models.Quizzes,{
       foreignKey:'idQuiz',
-      onDelete:'CASCADE'
+      onDelete:'CASCADE',
     });
-    TrackAssistTeachMe.belogsTo(models.quizoptions,{
+
+    TrackAssistTeachMe.belongsTo(models.quizOptions,{
       foreignKey:'idOption',
-      onDelete:'CASCADE'
+      onDelete:'CASCADE',
     });
+
   };
   return TrackAssistTeachMe;
 };
