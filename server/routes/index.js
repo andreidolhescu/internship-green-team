@@ -14,9 +14,13 @@ module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
         message: 'Welcome to the Users API! Token',
     }));
+    //app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
+    //    message:'Welcome to update;',
+    //}));
 
     // Users
     app.post('/api/register', userController.create);
+    app.get('/api/register/:id',userCheckAuth, userController.retrive);
     app.get('/api/register', userController.list);
     app.get('/api/register/:userId', userController.retrive);
     app.post('/api/login', userController.login);
