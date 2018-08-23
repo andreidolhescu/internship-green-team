@@ -1,24 +1,47 @@
+'use strict';
 module.exports = (sequelize, DataTypes) => {
-
-  const course = sequelize.define('course', {
+  let Course = sequelize.define('Course', {
     title: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    
     description: {
       type: DataTypes.STRING,
       allowNull: false
     },
-
-    courseImage: {
-      type: DataTypes.STRING,
-      allowNull: false
+    userId: {
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
+        as: 'userId'
+      },
+    },
+    categoryId:{
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Categorie',
+        key: 'id',
+        as: 'categoryId'
+      },
     }
   });
-  
-  course.associate = function(models) {
-    // associations can be defined here
+  Course.associate = function(models) {
+    //associations can be defined here
+    Course.belongsTo(models.Users, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    })
+    Course.belongsTo(models.Categorie, {
+      foreignKey: 'categoryId',
+      onDelete: 'CASCADE'
+    })
+    Course.hasMany(models.Chapter, {
+      foreignKey: 'courseId',
+      as: 'chapters'
+    })
   };
-  return course;
+  return Course;
 };

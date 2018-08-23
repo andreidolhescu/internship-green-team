@@ -1,104 +1,71 @@
-const Chapters = require('../models').Chapters;
-const User = require('../models').Users;
+const Chapter = require('../models').Chapter;
+const Quiz = require('../models').Quiz;
 
 module.exports = {
-    createc (req, res) {
-        return Chapters
+    createChapterForCourse(req, res){
+        return Chapter
             .create({
-            title: req.body.title,
-            content:req.body.content,
-            idCourse:req.body.idCourse   
+                name: req.body.name,
+                content: req.body.content,
+                courseId: req.params.courseId
             })
-            .then(chapter => res.status(201).send(chapter))
-            .catch(error => res.status(400).send(error));
+            .then(chapter => res.status(200).send(chapter))
+            .catch(error => res.status(400).send(error))
     },
-    listc(req, res) {
-        return Chapters
-            .findById(req.params.testId)
-            .then(chapter =>{ 
-                if (!chapter) {
-                    return res.status(404).send({
-                        message: 'Chapter Not Found',
-                    });
-                }else res.status(201).send(chapter)})
-            .catch(error => res.status(400).send(error));
-    },
-    listbycourse(req, res) {
-        let idCourse=req.body.idCourse;
-        if (!idCourse) {
-            return res.status(400).send({
-                message: "Id course required!"
-            });
-        }
-         return Chapters
-            .findAll({
-                where:{
-                    idCourse:idCourse
+    updateChapterInCourse(req, res){
+        return Chapter
+            .find({
+                where: {
+                    id: req.params.chapterId,
+                    courseId: req.params.courseId
                 }
             })
-            .then(chapter => res.status(201).send(chapter))
-            .catch(error => res.status(400).send(error));
-    },
-    updateAdmin (req, res) {
-        return Chapters
-            .findById(req.params.testId)
             .then(chapter => {
-                if (!chapter) {
-                    return res.status(404).send({
-                        message: 'Chapter Not Found',
-                    });
-                }
-                if (!req.body.title) {
-                    return res.status(400).send({
-                        message: "Title required!"
-                    });
-                }
-                if (!req.body.content) {
-                    return res.status(400).send({
-                        message: "Content required!"
-                    });
-                }
-                if (!req.body.idCourse) {
-                    return res.status(400).send({
-                        message: "idCourse required!"
-                    });
-                }
-                if (!req.body.title&& !req.body.content && !req.body.idCourse ) {
-                    return res.status(400).send({
-                        message: "Miss!"
-                    });
-                }
-                return chapter
-                    .update({
-                        title: req.body.title || chapter.title,
-                        content:req.body.content || chapter.content,
-                        idCourse:req.body.idCourse || chapter.idCourse,
-                    })
-                    .then(chapter =>{ 
-                        if (!chapter) {
-                            return res.status(404).send({
-                                message: 'Chapter Not Found',
-                            });
-                        }else res.status(201).send(chapter)})
-                    .catch((error) => res.status(400).send(error));
-            })
-            .catch((error) => res.status(400).send(error));
-    },
-    destroy (req, res) {
-        return Chapters
-            .findById(req.params.testId)
-            .then(chapter => {
-                if (!chapter) {
-                    return res.status(404).send({
-                        message: 'Chapter not Found',
-                    });
+                if(!chapter){
+                    return res.status(404).send('Chapter not found');
                 }
 
                 return chapter
-                    .destroy()
-                    .then(() => res.status(200).send("Success"))
-                    .catch((error) => res.status(400).send(error));
+                    .update({
+                        name: req.body.name || chapter.name,
+                        content: req.body.content || chapter.content
+                    })
+                    .then(chapter => res.status(200).send(chapter))
+                    .catch(error => res.status(400).send(error))
             })
-            .catch((error) => res.status(400).send(error));
+            .catch(error => res.status(400).send(error))
+    },
+    destroyChapterInCourse(req, res){
+        return Chapter 
+            .find({
+                where:{
+                    id: req.params.chapterId,
+                    courseId: req.params.courseId
+                }
+            })
+            .then(chapter => {
+                if(!chapter){
+                    return res.status(400).send('Chapter not found')
+                }
+
+                return chapter
+                .destroy()
+                .then(chapter => res.status(200).send(chapter))
+                .catch(error => res.status(400).send(error))
+            })
+            .catch(error => re.status(400).send(error))
+    },
+    //TODO: HERE PLZ!!!
+    showAllChapters(req, res) {
+        return Chapter
+            .findAll({
+                include: [{
+                    model: Quiz,
+                    as: 'quizzes'
+                }]
+            })
+            .all()
+            .then(chapters => res.status(200).send(chapters))
+            .catch(error => res.status(400).send(error))
     }
-};
+}
