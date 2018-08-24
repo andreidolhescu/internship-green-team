@@ -3,11 +3,11 @@ const jwt = require('jsonwebtoken');
 const random = require('randomstring');
 const nodemailer = require('nodemailer');
 
-const User = require('../models').Users;
+const User = require('../models').User;
 const Courses = require('../models').Course;
 
 module.exports = {
-    create(req, res) {
+    createUser(req, res) {
         bcrypt.hash(req.body.password, 10, (error,hash) => {
             if(error){
                 return res.status(400).send({
@@ -28,44 +28,20 @@ module.exports = {
                 .catch(error => res.status(400).send(error.message));
         });
     },
-    list(req,res) {
+    getUsersAndCourses(req,res) {
         return User
-            .findAll({
+            .findById(req.params.userId, {
                 include: [{
                     model: Courses,
                     as: 'courses'
                 }],
             })
-            .all()
             .then(users => res.status(200).send(users))
             .catch(error => res.status(400).send(error));
     },
-    retrive(req,res) {
+    updateUserById(req,res) {
         return User
-            .findById(req.params.userId, {
-                include: [{
-                    model: Courses,
-                    as:'courses'
-                }]
-            })
-            .then(user => {
-                if(!user) {
-                    return res.status(404).send({
-                        message: 'User Not Found',
-                    });
-                }
-                return res.status(200).send(user);
-            })
-            .catch(error => res.status(400).send(error));
-    },
-    update(req,res) {
-        return User
-            .findById(req.params.userId, {
-                include: [{
-                    model: Courses,
-                    as: 'courses'
-                }]
-            })
+            .findById(req.params.userId)
             .then(user => {
                 if(!user) {
                     return res.status(404).send({
@@ -82,7 +58,13 @@ module.exports = {
         })
         .catch(error => res.status(400).send(error));
     },
-    destroy(req, res){
+    getAllUsers(req, res) {
+        return User
+            .all()
+            .then(users => res.status(200).send(users))
+            .catch(error => res.status(400).send(error))
+    },
+    destroyUserById(req, res){
         return User
             .findById(req.params.userId)
             .then(user => {
@@ -93,12 +75,12 @@ module.exports = {
                 }
                 return user
                     .destroy()
-                    .then(() => res.status(200).send(user))
-                    .catch((error) => res.send(error))
+                    .then(user => res.status(200).send(user))
+                    .catch(error => res.send(error))
             })
             .catch(error => res.status(400).send(error));
     },
-    forgotPassword(req,res){
+    userRequestPasswordReset(req,res){
             let email = req.body.email;
             // let password = req.body.password;
             // let newPassword = req.body.newPassword;
@@ -112,46 +94,52 @@ module.exports = {
 
             email = email.toLowerCase();
 
-            User.findOne({
+            User.find({
                 where: {
                     email: email
                 }
             })
             .then(user => {
+                if(!user){
+                    return res.status(400).send('No user with this email address');
+                }
+                
                 nodemailer.createTestAccount((error, account) => {
                     if(error){
-                        res.send(`Error ${error}`);
+                        console.log('Failed to create a testing account ', error);
+                        return res.send(`Error ${error}`);
                     }
+                    console.log('Credentials obtainde, sending message...');
+                    
                     let transporter = nodemailer.createTransport({
-                        host: 'smtp.ethereal.email',
-                        port: 587,
-                        secure: false,
+                        service: 'gmail',
                         auth: {
-                            user: account.user,
-                            pass: account.pass
+                            user: 'greenteam557@gmail.com',
+                            pass: 'greenteam1234'
                         }
                     });
                
                     let mailOptions = {
-                        from: '"Green " <greenTeam@example.com>',
+                        from: 'greenteam557@gmail.com',
                         to: `${user.email}`,
                         subject: 'ResetPassword',
-                        text: 'http://api/reset/'+`${user.forgotPassword}`,
-                        html: '<b>Hello there, friend!</b>'
+                        text: 'GG EZ WORK!',
+                        html: 'http://api/users/reset/'+`${user.forgotPassword}`
                     };
                     
-                    transporter.sendMail(mailOptions, (error, info) => {
+                    return transporter.sendMail(mailOptions, (error, info) => {
                         if(error){
                             return res.send(`Error ${error}`);
                         }
                         console.log('Message sent: %s', info.messageId);
                         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                        return res.status(200).send(`Reset password message send to ${user.email}`);
                     });
-            });
+                })
             })
             .catch(error => res.status(400).send(`Error change password ${error}`));
     },
-    reset(req,res){
+    userPasswordReset(req,res){
         return User
             .findOne({
                 where: {
@@ -186,14 +174,14 @@ module.exports = {
                     }
                     return user
                         .update({
-                            password: hash
-                            //Todo: update forgot password token
+                            password: hash,
+                            forgotPassword: random.generate(15) 
                         })
                 })
             })
             .catch(error => res.send(`Error: ${error}`))
     },
-    login(req,res) {
+    userLogin(req,res) {
         let email = req.body.email;
         let password = req.body.password;
         

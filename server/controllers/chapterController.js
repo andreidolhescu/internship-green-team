@@ -12,12 +12,13 @@ module.exports = {
             .then(chapter => res.status(200).send(chapter))
             .catch(error => res.status(400).send(error))
     },
-    updateChapterInCourse(req, res){
+    updateChapterForCourse(req, res){
         return Chapter
             .find({
                 where: {
                     id: req.params.chapterId,
-                    courseId: req.params.courseId
+                    // TODO: Delete(all commented code) this at a later time if all goes well!
+                    //courseId: req.params.courseId
                 }
             })
             .then(chapter => {
@@ -35,12 +36,13 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error))
     },
-    destroyChapterInCourse(req, res){
+    destroyChapterForCourse(req, res){
         return Chapter 
             .find({
                 where:{
                     id: req.params.chapterId,
-                    courseId: req.params.courseId
+                    // TODO: Delete(all commented code) this at a later time if all goes well!
+                    //courseId: req.params.courseId
                 }
             })
             .then(chapter => {
@@ -49,14 +51,13 @@ module.exports = {
                 }
 
                 return chapter
-                .destroy()
-                .then(chapter => res.status(200).send(chapter))
-                .catch(error => res.status(400).send(error))
+                    .destroy()
+                    .then(chapter => res.status(200).send(chapter))
+                    .catch(error => res.status(400).send(error))
             })
             .catch(error => re.status(400).send(error))
     },
-    //TODO: HERE PLZ!!!
-    showAllChapters(req, res) {
+    showAllChaptersAndQuizzes(req, res) {
         return Chapter
             .findAll({
                 include: [{
@@ -64,7 +65,6 @@ module.exports = {
                     as: 'quizzes'
                 }]
             })
-            .all()
             .then(chapters => res.status(200).send(chapters))
             .catch(error => res.status(400).send(error))
     }

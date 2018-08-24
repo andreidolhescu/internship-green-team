@@ -1,30 +1,49 @@
-const Categories = require('../models').Categorie;
-const Courses = require('../models').Course;
+const Category = require('../models').Categorie;
+const Course = require('../models').Course;
 
 module.exports = {
-    create(req, res) {
-        return Categories
+    createCategory(req, res) {
+        return Category
             .create({
                 name: req.body.name
             })
             .then(user => res.status(200).send(user))
             .catch(error => res.status(400).send(error))
     },
-    //Todo destroy and update
-    listGategories(req, res){
-        return Categories
+    getCategoriesAndCourses(req, res){
+        return Category
             .findAll({
                 include: [{
-                    model: Courses,
+                    model: Course,
                     as: 'courses'
                 }]
             })
-            .all()
             .then(categories => res.status(200).send(categories))
+            .catch(error => {
+                console.log(error);
+              return  res.status(400).send(error)
+            })
+    },
+    getCategoryWithCourses(req, res){
+        return Category
+            .findAll({
+                include: [{
+                    model: Course,
+                    as: 'courses',
+                    where: {categoryId: req.params.categoryId}
+                }]
+            })
+            .then(category => res.statu(200).send(category))
             .catch(error => res.status(400).send(error))
     },
-    updateCategories(req, res){
-        return  Categories
+    getCategory(req, res){
+        return Category
+            .findById(req.params.categoryId)
+            .then(category => res.status(200).send(category))
+            .catch(error => res.status(400).send(error))
+    },
+    updateCategory(req, res){
+        return  Category
             .find({
                 where: {
                     id: req.params.categoryId
@@ -44,8 +63,8 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error))     
     },
-    destroyCategories(req, res){
-        return Categories
+    destroyCategory(req, res){
+        return Category
             .findById(req.params.categoryId)
             .then(category => {
                 if(!category){

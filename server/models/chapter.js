@@ -9,15 +9,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    courseId:{
-      type: DataTypes.INTEGER,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Course',
-        key: 'id',
-        as: 'courseId'
-      },
-    },
   });
   Chapter.associate = function(models) {
     Chapter.belongsTo(models.Course, {
