@@ -1,21 +1,22 @@
-const Quizzes = require('../models').Quiz;
-const QuizOptions = require('../models').QuizOption;
+const Quiz = require('../models').Quiz;
+const QuizOption = require('../models').QuizOption;
 
 module.exports = {
     createQuizForChapter(req, res) {
-        return Quizzes
+        return Quiz
             .create({
                 content: req.body.content,
-                idChapter: req.param.idChapter
+                chapterId: req.param.chapterId
             })
             .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));
     },
-    destroyQuizInChapter(req, res) {
-        return Quizzes
+    destroyQuizForChapter(req, res) {
+        return Quiz
             .find({
                 id: req.params.idQuiz,
-                idChapter: req.params.idChapter
+                // TODO: Delete(all commented code) this at a later time if all goes well!
+                //chapterId: req.params.chapterId
             })
             .then(quiz => {
                 if (!quiz) {
@@ -26,28 +27,17 @@ module.exports = {
 
                 return quiz
                     .destroy()
-                    .then(() => res.status(200).send("Success"))
+                    .then((quiz) => res.status(200).send(quiz))
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));
     },
-    listQuizezInChapter(req, res) {
-        return Quizzes
-            .findAll({
+    listQuizAndQuizOptions(req, res) {
+        return Quiz
+            .findById(req.params.idQuiz,{
                 include: [{
-                    model: QuizOptions,
-                    as: 'quizOptions',
-                }],
-            })
-            .then(quiz => res.status(200).send(quiz))
-            .catch(error => res.status(400).send(error));
-    },
-    retrieveQuizFromChapter(req, res) {
-        return Quizzes
-            .findById(req.params.idQuiz, {
-                include: [{
-                    model: QuizOptions,
-                    as: 'quizOptions',
+                    model: QuizOption,
+                    as: 'quizOptions'
                 }],
             })
             .then(quiz => {
@@ -60,14 +50,9 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error));
     },
-    updateQuizInChapter(req, res) {
-        return Quizzes
-            .findById(req.params.idQuiz, {
-                include: [{
-                    model: QuizOptions,
-                    as: 'quizOptions',
-                }],
-            })
+    updateQuizForChapter(req, res) {
+        return Quiz
+            .findById(req.params.idQuiz)
             .then(quiz => {
                 if (!quiz) {
                     return res.status(404).send({
@@ -76,9 +61,9 @@ module.exports = {
                 }
                 return quiz
                     .update({
-                        content: req.body.content || todo.content,
+                        content: req.body.content || quiz.content,
                     })
-                    .then(() => res.status(200).send(quiz))  // Send back the updated todo.
+                    .then((quiz) => res.status(200).send(quiz))
                     .catch((error) => res.status(400).send(error));
             })
             .catch((error) => res.status(400).send(error));

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Chapter = sequelize.define('Chapter', {
+  let Chapter = sequelize.define('Chapter', {
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -8,15 +8,6 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-    courseId:{
-      type: DataTypes.INTEGER,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Course',
-        key: 'id',
-        as: 'courseId'
-      },
     },
   });
   Chapter.associate = function(models) {

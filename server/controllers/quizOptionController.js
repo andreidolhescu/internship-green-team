@@ -1,87 +1,83 @@
-const QuizOptions = require('../models').QuizOption;
+const QuizOption = require('../models').QuizOption;
 
 module.exports = {
-    create(req, res) {
-        return QuizOptions
+    createQuizOption(req, res) {
+        return QuizOption
             .create({
                 answer: req.body.answer,
                 correct: req.body.correct,
                 idQuiz: req.params.idQuiz
             })
-            .then(quizoption => res.status(201).send(quizoption))
+            .then(quizOption => res.status(201).send(quizOption))
             .catch(error => res.status(400).send(error.message));
     },
 
-    list(req, res) {
-        return QuizOptions
+    listQuizOption(req, res) {
+        return QuizOption
             .all()
-            .then(qo => res.status(200).send(qo))
+            .then(quizOption => res.status(200).send(quizOption))
             .catch(error => res.status(400).send(error));
     },
-    //all options for a quiz
-    getById(req, res) {
-        let idQuiz = req.body.idQuiz;
-        if (!idQuiz) {
-            return res.status(400).send({
-                message: "Id quiz required!"
-            });
-        }
-        return QuizOptions
-            .findAll({
+
+    getQuizOption(req, res) {
+        return QuizOption
+            .find({
                 where: {
                     idQuiz: req.body.idQuiz
                 }
             })
-            .then(quiz => res.status(201).send(quiz))
+            .then(quizOption => res.status(201).send(quizOption))
             .catch(error => res.status(400).send(error));
     },
 
     //allow admin to change quiz option details
-    update(req, res) {
-        return QuizOptions
-            .findOne({
+    updateQuizOption(req, res) {
+        return QuizOption
+            .find({
                 where: {
-                    id: req.params.id,
-                    idQuiz: req.body.idQuiz
+                    id: req.params.quizOptionId,
+                    //Todo: Delete if you don't need it
+                    //idQuiz: req.body.idQuiz
                 }
             })
-            .then(quizoption => {
-                if (!quizoption) {
+            .then(quizOption => {
+                if (!quizOption) {
                     return res.status(404).send({
                         message: 'Quiz Not Found',
                     });
                 }
 
-                return quizoption
+                return quizOption
                     .update({
-                        text: req.body.text || quizoption.text,
-                        correct: req.body.correct || quizoption.correct,
+                        text: req.body.text || quizOption.text,
+                        correct: req.body.correct || quizOption.correct,
                     })
-                    .then(quizoption => res.status(200).send(quizoption))
-                    .catch((error) => res.status(400).send(error));
+                    .then(quizOption => res.status(200).send(quizOption))
+                    .catch(error => res.status(400).send(error));
             })
-            .catch((error) => res.status(400).send(error));
+            .catch(error => res.status(400).send(error));
     },
 
     //allow admins to delete quiz options
-    destroy(req, res) {
-        return QuizOptions
+    destroyQuizOption(req, res) {
+        return QuizOption
             .find({
                 where: {
-                    id: req.params.id,
-                    idQuiz: req.params.idQuiz,
+                    id: req.params.quizOptionId,
+                    //Todo: Delete if you don't need it
+                    //idQuiz: req.params.idQuiz,
                 },
             })
-            .then(quiz => {
-                if (!quiz) {
+            .then(quizOption => {
+                if (!quizOption) {
                     return res.status(404).send({
                         message: 'Option quiz Not Found',
                     });
                 }
 
-                return quiz
+                return quizOption
                     .destroy()
-                    .then(() => res.status(204).send())
+                    .then(quizOption => res.status(204).send(quizOption))
                     .catch(error => res.status(400).send(error));
             })
             .catch(error => res.status(400).send(error));

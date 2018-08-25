@@ -9,28 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNullNull: false
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Users',
-        key: 'id',
-        as: 'userId'
-      },
-    },
-    categoryId:{
-      type: DataTypes.INTEGER,
-      onDelete: 'CASCADE',
-      references: {
-        model: 'Categorie',
-        key: 'id',
-        as: 'categoryId'
-      },
-    }
   });
   Course.associate = function(models) {
     //associations can be defined here
-    Course.belongsTo(models.Users, {
+    Course.belongsTo(models.User, {
       foreignKey: 'userId',
       onDelete: 'CASCADE'
     })

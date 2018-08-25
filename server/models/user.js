@@ -1,6 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  let Users = sequelize.define('Users', {
+  let User = sequelize.define('User', {
+    // TODO: Delete(all commented code) this at a later time if all goes well!
     // userId: {
     //   type: DataTypes.INTEGER,
     //   allowNull: false
@@ -37,12 +38,12 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     }
   });
-  Users.associate = function(models) {
+  User.associate = function(models) {
     // associations can be defined here
-    Users.hasMany(models.Course, {
+    User.hasMany(models.Course, {
       foreignKey: 'userId',
       as: 'courses'
     });
   };
-  return Users;
+  return User;
 };

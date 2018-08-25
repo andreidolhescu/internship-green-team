@@ -1,16 +1,16 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Quiz = sequelize.define('Quiz', {
+  let Quiz = sequelize.define('Quiz', {
     content: DataTypes.STRING,
   });
   Quiz.associate = function(models) {
     // associations can be defined here
     Quiz.belongsTo(models.Chapter,{
-      foreignKey:'idChapter',
+      foreignKey:'chapterId',
       onDelete:'CASCADE',
     })
     Quiz.hasMany(models.QuizOption,{
-      foreignKey:'idQuiz',
+      foreignKey:'quizId',
       as:'quizOptions',
     });
   };

@@ -19,13 +19,13 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
-      idQuiz:{
+      quizId:{
         type:Sequelize.INTEGER,
         onDelete:'CASCADE',
         references:{
           model:'Quizzes',
           key:'id',
-          as:'idQuiz',
+          as:'quizId',
         }
       },
       createdAt: {

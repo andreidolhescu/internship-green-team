@@ -11,14 +11,14 @@ module.exports = {
                 categoryId: req.params.categoryId,
             })
             .then(course => res.status(201).send(course))
-            .catch(error => res.status(400).send(error));
+            .catch(() => res.status(400).send(`There is no such category as category ${req.params.categoryId}`));
     },
-    updateCourseInCategory (req, res){
+    updateCourse (req, res){
         return Course
             .find({
                 where: {
                     id: req.params.courseId,
-                    categoryId: req.params.categoryId
+                    //categoryId: req.params.categoryId
                 },
             })
             .then(course => {
@@ -39,16 +39,11 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error));
     },
-    destroyCourseInCategory(req, res){
+    destroyCourse(req, res){
         return Course
-            .find({
-                where: {
-                    id: req.params.courseId,
-                    categoryId: req.params.categoryId
-                },
-            })
+            .findById(req.params.courseId)
             .then(course => {
-                if(!user) {
+                if(!course) {
                     return res.status(404).send({
                         message: 'Course Not Found',
                     });
@@ -56,12 +51,23 @@ module.exports = {
                 
                 return course
                     .destroy()
-                    .then(() => res.status(204).send())
+                    .then(course => res.status(204).send(course))
                     .catch(error => res.status(400).send(error));
             })
             .catch(error => res.status(400).send(error))
     },
-    showAllCourses(req, res){
+    showCourseAndChapters(req, res){
+        return Course
+            .findById(req.params.courseId,{
+                include: [{
+                    model: Chapter,
+                    as: 'chapters',
+                }]
+            })
+            .then(course => res.status(200).send(course))
+            .catch(error => res.status(400).send(error))
+    },
+    showAllCoursesAndChapters(req, res){
         return Course
             .findAll({
                 include: [{
@@ -69,9 +75,8 @@ module.exports = {
                     as: 'chapters'
                 }]
             })
-            .all()
             .then(courses => res.status(200).send(courses))
-            .catch(error => res.status(404).send(error)) 
+            .catch(error => res.status(404).send('Nothing found'+error)) 
     }
 
 };
