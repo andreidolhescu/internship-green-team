@@ -11,12 +11,14 @@ const quizOptionController = require('../controllers').quizOptionController;
 
 
 module.exports = (app) => {
+    app.use(cors()); //Do not remove this
+    
     app.get('/api', (req,res) => res.status(200).send({
         message: 'Welcome to the Users API! Token',
     }));
-    //app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
-    //    message:'Welcome to update;',
-    //}));
+    app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
+       message:'Welcome to update;',
+    }));
 
     // Users
     app.post('/api/register', userController.createUser);
@@ -31,21 +33,22 @@ module.exports = (app) => {
     // Courses
     app.post('/api/categories/:categoryId', courseController.createCourseForCategory);
     app.put('/api/categories/courses/:courseId', courseController.updateCourse);
-    app.delete('api/categories/courses/:courseId', courseController.destroyCourse);
+    app.delete('/api/categories/courses/:courseId', courseController.destroyCourse);
     app.get('/api/categories/courses/:courseId', courseController.showCourseAndChapters);
     app.get('/api/categories/courses', courseController.showAllCoursesAndChapters);
 
     // Categories
     app.post('/api/categories', categorieController.createCategory);
     app.get('/api/categories', categorieController.getCategoriesAndCourses);
+    app.get('/api/categories/:categoryId', categorieController.getCategoryWithCourses);
     app.put('/api/categories/:categoryId', categorieController.updateCategory);
     app.delete('/api/categories/:categoryId', categorieController.destroyCategory);
 
     // Chapters
-    app.post('/api/categories/courses/:courseId/chapters', chapterController.createChapterForCourse);
+    app.post('/api/categories/courses/:courseId', chapterController.createChapterForCourse);
     app.put('/api/categories/courses/chapters/:chapterId', chapterController.updateChapterForCourse);
     app.delete('/api/categories/courses/chapters/:chapterId', chapterController.destroyChapterForCourse);
-    app.get('/api/categories/courses/chapters', chapterController.showAllChaptersAndQuizzes);
+    app.get('/api/categories/course/quizes', chapterController.showAllChaptersAndQuizzes);
 
     //Quiz
     app.post('/api/categories/courses/chapters/:idChapter/quiz', quizController.createQuizForChapter);

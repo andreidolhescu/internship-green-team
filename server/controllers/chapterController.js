@@ -10,7 +10,7 @@ module.exports = {
                 courseId: req.params.courseId
             })
             .then(chapter => res.status(200).send(chapter))
-            .catch(error => res.status(400).send(error))
+            .catch(() => res.status(400).send(`There is no such course as course ${req.params.courseId}`))
     },
     updateChapterForCourse(req, res){
         return Chapter
@@ -57,6 +57,12 @@ module.exports = {
             })
             .catch(error => re.status(400).send(error))
     },
+    showAllChapters(req,res){
+        return Chapter
+            .all()
+            .then(chapters => res.status(200).send(chapters))
+            .catch(error => res.status(400).send(error))
+    },
     showAllChaptersAndQuizzes(req, res) {
         return Chapter
             .findAll({
@@ -68,4 +74,4 @@ module.exports = {
             .then(chapters => res.status(200).send(chapters))
             .catch(error => res.status(400).send(error))
     }
-}
+};

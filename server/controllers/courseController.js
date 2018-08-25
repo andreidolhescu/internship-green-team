@@ -11,7 +11,7 @@ module.exports = {
                 categoryId: req.params.categoryId,
             })
             .then(course => res.status(201).send(course))
-            .catch(error => res.status(400).send(error));
+            .catch(() => res.status(400).send(`There is no such category as category ${req.params.categoryId}`));
     },
     updateCourse (req, res){
         return Course
@@ -41,12 +41,7 @@ module.exports = {
     },
     destroyCourse(req, res){
         return Course
-            .find({
-                where: {
-                    id: req.params.courseId,
-                    //categoryId: req.params.categoryId
-                },
-            })
+            .findById(req.params.courseId)
             .then(course => {
                 if(!course) {
                     return res.status(404).send({
@@ -56,18 +51,17 @@ module.exports = {
                 
                 return course
                     .destroy()
-                    .then((course) => res.status(204).send(course))
+                    .then(course => res.status(204).send(course))
                     .catch(error => res.status(400).send(error));
             })
             .catch(error => res.status(400).send(error))
     },
     showCourseAndChapters(req, res){
         return Course
-            .find({
+            .findById(req.params.courseId,{
                 include: [{
                     model: Chapter,
                     as: 'chapters',
-                    where: {courseId: req.params.courseId}
                 }]
             })
             .then(course => res.status(200).send(course))
@@ -82,7 +76,7 @@ module.exports = {
                 }]
             })
             .then(courses => res.status(200).send(courses))
-            .catch(error => res.status(404).send(error)) 
+            .catch(error => res.status(404).send('Nothing found'+error)) 
     }
 
 };

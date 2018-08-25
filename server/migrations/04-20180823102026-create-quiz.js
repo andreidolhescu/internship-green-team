@@ -11,13 +11,13 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
-      idChapter:{
+      chapterId:{
         type:Sequelize.INTEGER,
         onDelete:'CASCADE',
         references:{
           model:'Chapters',
           key:'id',
-          as:'idChapter',
+          as:'chapterId',
         }
       },
       createdAt: {

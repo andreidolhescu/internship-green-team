@@ -26,14 +26,13 @@ module.exports = {
     },
     getCategoryWithCourses(req, res){
         return Category
-            .findAll({
+            .findById(req.params.categoryId,{
                 include: [{
                     model: Course,
                     as: 'courses',
-                    where: {categoryId: req.params.categoryId}
                 }]
             })
-            .then(category => res.statu(200).send(category))
+            .then(category => res.status(200).send(category))
             .catch(error => res.status(400).send(error))
     },
     getCategory(req, res){
@@ -44,11 +43,7 @@ module.exports = {
     },
     updateCategory(req, res){
         return  Category
-            .find({
-                where: {
-                    id: req.params.categoryId
-                }
-            })
+            .findById(req.params.categoryId)
             .then(category => {
                 if(!category){
                     return res.status(400).send('Category does not exist')

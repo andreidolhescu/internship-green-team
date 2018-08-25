@@ -6,7 +6,7 @@ module.exports = {
         return Quiz
             .create({
                 content: req.body.content,
-                idChapter: req.param.idChapter
+                chapterId: req.param.chapterId
             })
             .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));
@@ -16,7 +16,7 @@ module.exports = {
             .find({
                 id: req.params.idQuiz,
                 // TODO: Delete(all commented code) this at a later time if all goes well!
-                //idChapter: req.params.idChapter
+                //chapterId: req.params.chapterId
             })
             .then(quiz => {
                 if (!quiz) {
@@ -34,11 +34,10 @@ module.exports = {
     },
     listQuizAndQuizOptions(req, res) {
         return Quiz
-            .find({
+            .findById(req.params.idQuiz,{
                 include: [{
                     model: QuizOption,
-                    as: 'quizOptions',
-                    where: {idQuiz: req.params.idQuiz}
+                    as: 'quizOptions'
                 }],
             })
             .then(quiz => {
