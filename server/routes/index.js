@@ -79,7 +79,7 @@ module.exports = (app) => {
     app.put('/api/register/:id',userController.update);
     app.delete('/api/register/:id', userController.destroy);
 
-    app.post('/api/addOptions', qoptions.create);
+    app.post('/api/quizzes/:quizId/items', qoptions.create);
     app.get('/api/optionsList', qoptions.list);
     app.post('/api/optionsListquiz', qoptions.getById);
     app.put('/api/updateQuizOptions',adminCheckAuth, qoptions.update);
@@ -91,11 +91,15 @@ module.exports = (app) => {
     app.put('/api/updateAdmin/:testId',adminCheckAuth,chapters.updateAdmin);
     app.delete('/api/deletechapter/:testId',adminCheckAuth, chapters.destroy);
 
-    app.post('/api/addquiz',userCheckAuth,quizzes.createq);
+    app.post('/api/quizzes',quizzes.createq);
     app.get('/api/listq/:testId',userCheckAuth,quizzes.getByIdq);
     app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
+<<<<<<< Updated upstream
 };
 
+=======
+    app.get('/api/quizzes', quizzes.list);
+>>>>>>> Stashed changes
 

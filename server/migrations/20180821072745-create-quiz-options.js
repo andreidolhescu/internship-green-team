@@ -8,29 +8,37 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      option1: {
+      answer: {
         type: Sequelize.STRING,
         allowNull: false,
         validate: {
           len: [0,70]
         }
       },
-      option2: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [0,70]
-        }
+      correct: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
-      option3: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          len: [0,70]
-        }
-      },
-      idQuiz: {
-       type: Sequelize.INTEGER
+      // idQuiz: {
+      //  type: Sequelize.INTEGER
+      // },
+      // todoId: {
+      //   type: Sequelize.INTEGER,
+      //   onDelete: 'CASCADE',
+      //   references: {
+      //     model: 'Todos',
+      //     key: 'id',
+      //     as: 'todoId',
+      //   },
+      // },
+      quizId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Quizzes',
+          key: 'id',
+          as: 'quizId',
+        },
       },
       createdAt: {
         allowNull: false,

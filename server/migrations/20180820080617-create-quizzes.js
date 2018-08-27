@@ -11,9 +11,18 @@ module.exports = {
       content: {
         type: Sequelize.STRING
       },
-      idChapter:{
-        type:Sequelize.INTEGER,
-        allowNull:false
+      // idChapter:{
+      //   type:Sequelize.INTEGER,
+      //   allowNull:false
+      // },
+      chapterId: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Chapters',
+          key: 'id',
+          as: 'chapterId',
+        },
       },
       createdAt: {
         allowNull: false,

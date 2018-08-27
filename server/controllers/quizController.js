@@ -5,11 +5,31 @@ module.exports = {
         return Quizzes
             .create({
             content:req.body.content,
-            idChapter:req.body.idChapter   
+            //chapterId:req.params.chapterId   
             })
             .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));
     },
+    // return Todo
+    // .findAll({
+    //   include: [{
+    //     model: TodoItem,
+    //     as: 'todoItems',
+    //   }],
+    // })
+    // .then(todos => res.status(200).send(todos))
+    // .catch(error => res.status(400).send(error));
+    list(req, res) {
+        return Quizzes
+        .findAll({
+            include: [{
+                model: quizOptions,
+                as: 'quizOptions',
+            }],
+        })
+          .then(quizzes => res.status(200).send(quizzes))
+          .catch(error => res.status(400).send(error));
+      },
     getByIdq (req, res) {
         return Quizzes
             .findById(req.params.testId)
