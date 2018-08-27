@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  let Quiz = sequelize.define('Quiz', {
+  const Quiz = sequelize.define('Quiz', {
     content: DataTypes.STRING,
   });
   Quiz.associate = function(models) {
@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey:'quizId',
       as:'quizOptions',
     });
+    Quiz.hasMany(models.Answer, {
+      foreignKey: 'quizId',
+      as: 'answers'
+    })
   };
   return Quiz;
 };

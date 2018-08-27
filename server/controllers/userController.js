@@ -4,7 +4,10 @@ const random = require('randomstring');
 const nodemailer = require('nodemailer');
 
 const User = require('../models').User;
-const Courses = require('../models').Course;
+const Course = require('../models').Course;
+
+
+let array = [];
 
 module.exports = {
     createUser(req, res) {
@@ -32,7 +35,7 @@ module.exports = {
         return User
             .findById(req.params.userId, {
                 include: [{
-                    model: Courses,
+                    model: Course,
                     as: 'courses'
                 }],
             })
@@ -210,7 +213,7 @@ module.exports = {
                         id: user.id,
                         admin: user.admin
                     },
-                    process.env.JWT_KEY,
+                    'secretKey',
                     {
                         expiresIn: '1h'
                     });
