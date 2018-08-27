@@ -19,7 +19,7 @@ module.exports = {
             .catch(error => res.status(400).send(error));
     },
 
-    /*getQuizOption(req, res) {
+    getQuizOption(req, res) {
         return QuizOption
             .find({
                 where: {
@@ -28,7 +28,7 @@ module.exports = {
             })
             .then(quizOption => res.status(201).send(quizOption))
             .catch(error => res.status(400).send(error));
-    },*/
+    },
 
     //allow admin to change quiz option details
     updateQuizOption(req, res) {

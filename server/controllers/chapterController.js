@@ -57,12 +57,12 @@ module.exports = {
             })
             .catch(error => re.status(400).send(error))
     },
-    /*showAllChapters(req,res){
+    showAllChapters(req,res){
         return Chapter
             .all()
             .then(chapters => res.status(200).send(chapters))
             .catch(error => res.status(400).send(error))
-    },*/
+    },
     showAllChaptersAndQuizzes(req, res) {
         return Chapter
             .findAll({

@@ -16,42 +16,42 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      // userId:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'Users',
-      //     key:'id',
-      //     as:'userId',
-      //   },
-      // },
-      // idCategory:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'Categories',
-      //     key:'id',
-      //     as:'idCategory',
-      //   }
-      // },
-      // idCourse:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'Courses',
-      //     key:'id',
-      //     as:'idCourse',
-      //   },
-      // },
-      // idProcess:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'Answers',
-      //     key:'id',
-      //     as:'idProcess',
-      //   }
-      // },
+      userId:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Users',
+          key:'id',
+          as:'userId',
+        },
+      },
+      categoryId:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Categories',
+          key:'id',
+          as:'categoryId',
+        }
+      },
+      courseId:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Courses',
+          key:'id',
+          as:'courseId',
+        },
+      },
+      idProcess:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Answers',
+          key:'id',
+          as:'idProcess',
+        }
+      },
 
     });
   },

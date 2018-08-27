@@ -35,12 +35,12 @@ module.exports = {
             .then(category => res.status(200).send(category))
             .catch(error => res.status(400).send(error))
     },
-    /*getCategory(req, res){
+    getCategory(req, res){
         return Category
             .findById(req.params.categoryId)
             .then(category => res.status(200).send(category))
             .catch(error => res.status(400).send(error))
-    },*/
+    },
     updateCategory(req, res){
         return  Category
             .findById(req.params.categoryId)

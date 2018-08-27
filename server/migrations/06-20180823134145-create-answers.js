@@ -19,42 +19,42 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      // userId:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'Users',
-      //     key:'id',
-      //     as:'userId',
-      //   },
-      // },
-      // idQuiz:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'Quizzes',
-      //     key:'id',
-      //     as:'idQuiz',
-      //   }
-      // },
-      // idOption:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'QuizOptions',
-      //     key:'id',
-      //     as:'idOption',
-      //   }
-      // },
-      // idChapter:{
-      //   type:Sequelize.INTEGER,
-      //   onDelete:'CASCADE',
-      //   references:{
-      //     model:'Chapters',
-      //     key:'id',
-      //     as:'idChapter',
-      //   }
-      // },
+      userId:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Users',
+          key:'id',
+          as:'userId',
+        },
+      },
+      chapterId:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Chapters',
+          key:'id',
+          as:'chapterId',
+        }
+      },
+      quizId:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'Quizzes',
+          key:'id',
+          as:'quizId',
+        }
+      },
+      optionId:{
+        type:Sequelize.INTEGER,
+        onDelete:'CASCADE',
+        references:{
+          model:'QuizOptions',
+          key:'id',
+          as:'optionId',
+        }
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
