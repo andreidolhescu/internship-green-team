@@ -6,8 +6,8 @@ module.exports = {
         return Chapters
             .create({
             title: req.body.title,
-            content:req.body.content,
-            idCourse:req.body.idCourse   
+            content:req.body.content, 
+            coursesid: req.params.coursesid 
             })
             .then(chapter => res.status(201).send(chapter))
             .catch(error => res.status(400).send(error));
@@ -24,8 +24,8 @@ module.exports = {
             .catch(error => res.status(400).send(error));
     },
     listbycourse(req, res) {
-        let idCourse=req.body.idCourse;
-        if (!idCourse) {
+        let coursesid=req.params.coursesid;
+        if (!coursesid) {
             return res.status(400).send({
                 message: "Id course required!"
             });
@@ -33,7 +33,7 @@ module.exports = {
          return Chapters
             .findAll({
                 where:{
-                    idCourse:idCourse
+                    coursesid:coursesid
                 }
             })
             .then(chapter => res.status(201).send(chapter))

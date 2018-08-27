@@ -1,4 +1,8 @@
 const Course = require('../models').Course;
+const Chapters = require('../models').Chapters;
+const Quizzes = require('../models').Quizzes;
+const QuizOptions = require('../models').quizOptions;
+
 
 module.exports = {
     //add new course
@@ -50,6 +54,28 @@ module.exports = {
         .then(cat => res.status(201).send(cat))
         .catch(error => res.status(400).send(error));
 
+    },
+
+    //list all courses with chapters, quizzes and answers
+    listCourses(req, res) {
+        return Course
+            .findAll({
+                include: [{
+                    model: Chapters
+                },
+                {
+                    model: Quizzes
+                },
+                {
+                    model: QuizOptions
+                }
+                ]
+            })
+            .then(curs => res.status(201).send(curs))
+            .catch(error => {
+                console.log("eroare", error);
+                return res.status(400).send(error)
+            });
     },
     
     updateAdminC (req, res) {

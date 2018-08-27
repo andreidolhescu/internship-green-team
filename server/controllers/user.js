@@ -205,7 +205,7 @@ module.exports = {
                         id: user.id,
                         admin: user.admin
                     },
-                    process.env.JWT_KEY,
+                    'secretKey',
                     {
                         expiresIn: '1h'
                     });
@@ -220,5 +220,6 @@ module.exports = {
             });  
         })
         .catch(error => res.status(400).send(`Email invalid. Error: ${error}`))
-    }
+    },
+
 };

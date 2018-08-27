@@ -41,6 +41,7 @@ module.exports = (app) => {
 const userController = require('../controllers').users;
 const CategoryController = require('../controllers').CategoryController;
 const CourseController = require('../controllers').CourseController;
+const progress = require('../controllers').progress;
 
 module.exports = (app) => {
     app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
@@ -70,30 +71,33 @@ module.exports = (app) => {
     //Courses
     app.post('/api/Courses/:idCategory', upload.single('courseImage'), CourseController.create);
     app.get('/api/Courses/listbyidCategory/:idCategory', CourseController.list);
+    app.get('/api/Courses/all', CourseController.listCourses);
     app.get('/api/Courses/:courseId', userCheckAuth, CourseController.getById);
     app.put('/api/Courses/:courseId', adminCheckAuth, CourseController.updateAdminC);
     //app.delete('/api/deleteCourse/:courseId', adminCheckAuth, CourseController.destroyC);
 
     //Quiz options
-    app.post('/api/addOptions', qoptions.create);
+    app.post('/api/addOptions/:quizzid/:coursesid', qoptions.create);
     app.get('/api/optionsList', qoptions.list);
     app.post('/api/optionsListquiz', qoptions.getById);
     app.put('/api/updateQuizOptions',adminCheckAuth, qoptions.update);
     app.delete('/api/deleteOptions',adminCheckAuth, qoptions.destroy);
 
     //Chapters
-    app.post('/api/listbycourse',userCheckAuth,chapters.listbycourse);
+    app.get('/api/listbycourse/:coursesid',/*userCheckAuth,*/chapters.listbycourse);
     app.get('/api/listc/:testId',userCheckAuth,chapters.listc);
-    app.post('/api/addchapter',userCheckAuth,chapters.createc);
+    app.post('/api/addchapter/:coursesid',/*userCheckAuth,*/chapters.createc);
     app.put('/api/updateAdmin/:testId',adminCheckAuth,chapters.updateAdmin);
     app.delete('/api/deletechapter/:testId',adminCheckAuth, chapters.destroy);
 
     //Quizzes
-    app.post('/api/addquiz',userCheckAuth,quizzes.createq);
+    app.post('/api/addquiz/:chaptersid/:coursesid',/*userCheckAuth,*/quizzes.createq);
     app.get('/api/listq/:testId',userCheckAuth,quizzes.getByIdq);
     app.post('/api/listbychapterq',userCheckAuth,quizzes.listbychapterq);
     app.put('/api/updateAdminq/:testId',adminCheckAuth,quizzes.updateAdminq);
     app.delete('/api/deletequiz/:testId',adminCheckAuth,quizzes.destroyq);
+
+    app.get('/api/progress', progress.progress);
 };
 
 

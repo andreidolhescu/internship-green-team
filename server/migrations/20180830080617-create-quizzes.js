@@ -27,6 +27,15 @@ module.exports = {
           as: 'chaptersid',
         },
       },
+      coursesid: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Courses',
+          key: 'id',
+          as: 'coursesid',
+        },
+      }
     });
   },
   down: (queryInterface, Sequelize) => {

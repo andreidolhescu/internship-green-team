@@ -7,11 +7,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     small_description: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [0,70]
+      }
     },
     long_description: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        len: [0,150]
+      }
     },
     courseImage: {
       type: DataTypes.STRING,
@@ -33,6 +39,14 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     Course.hasMany(models.Chapters, {
+      foreignKey: 'coursesid',
+    });
+
+    Course.hasMany(models.Quizzes, {
+      foreignKey: 'coursesid',
+    });
+
+    Course.hasMany(models.quizOptions, {
       foreignKey: 'coursesid',
     });
   };

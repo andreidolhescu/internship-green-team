@@ -4,10 +4,10 @@ module.exports = {
     create (req, res) {
         return QuizOptions
             .create({
-                option1: req.body.option1,
-                option2: req.body.option2,
-                option3: req.body.option3,
-                idQuiz: req.body.idQuiz
+                answer:req.body.answer,
+                correct:req.body.correct,
+                quizzid: req.params.quizzid,
+                coursesid: req.params.coursesid
             })
             .then(quizoption => res.status(201).send(quizoption))
             .catch(error => res.status(400).send(error.message));

@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     quizOptions.belongsTo(models.Quizzes, {
       foreignKey: 'quizzid',
     });
+
+    quizOptions.belongsTo(models.Course, {
+      foreignKey: 'coursesid',
+      onDelete: 'CASCADE'
+    });
   };
   
   return quizOptions;

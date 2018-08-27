@@ -5,7 +5,8 @@ module.exports = {
         return Quizzes
             .create({
             content:req.body.content,
-            idChapter:req.body.idChapter   
+            chaptersid: req.params.chaptersid,
+            coursesid:req.params.coursesid   
             })
             .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));

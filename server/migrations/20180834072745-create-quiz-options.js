@@ -35,6 +35,15 @@ module.exports = {
           as: 'quizzid',
         },
       },
+      coursesid: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Courses',
+          key: 'id',
+          as: 'coursesid',
+        },
+      }
     });
   },
   down: (queryInterface, Sequelize) => {

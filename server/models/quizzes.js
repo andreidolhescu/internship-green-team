@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
     Quizzes.hasMany(models.quizOptions, {
       foreignKey: 'quizzid',
     });
+
+    Quizzes.belongsTo(models.Course, {
+      foreignKey: 'coursesid',
+      onDelete: 'CASCADE'
+    })
   };
 
   return Quizzes;
