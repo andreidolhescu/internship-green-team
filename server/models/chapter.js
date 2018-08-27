@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  let Chapter = sequelize.define('Chapter', {
+  const Chapter = sequelize.define('Chapter', {
     name: {
       type: DataTypes.STRING,
       allowNull: false

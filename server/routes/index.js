@@ -10,6 +10,7 @@ const quizController = require('../controllers').quizController;
 const quizOptionController = require('../controllers').quizOptionController;
 
 
+
 module.exports = (app) => {
     app.use(cors()); //Do not remove this
     
@@ -19,6 +20,10 @@ module.exports = (app) => {
     app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
        message:'Welcome to update;',
     }));
+
+    //Testing
+    //app.get('/api/user/:userId/course/:courseId', userCourseController.create);
+    //app.get('/api/test', userController.listCourseAndUser);
 
     // Users
     app.post('/api/register', userController.createUser);

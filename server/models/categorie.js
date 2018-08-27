@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  let Categorie = sequelize.define('Categorie', {
+  const Categorie = sequelize.define('Categorie', {
     name: {
       type: DataTypes.STRING,
       allowNull: false
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     Categorie.hasMany(models.Course, {
       foreignKey: 'categoryId',
       as: 'courses'
-    })
+    });
   };
   return Categorie;
 };

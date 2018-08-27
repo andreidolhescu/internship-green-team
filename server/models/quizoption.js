@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var QuizOption = sequelize.define('QuizOption', {
+  const QuizOption = sequelize.define('QuizOption', {
     answer: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey:'quizId',
       onDelete:'CASCADE',
     });
+    QuizOption.hasOne(models.Answer, {
+      foreignKey: 'quizOptionId',
+      as: 'answers'
+    })
   };
   return QuizOption;
 };
