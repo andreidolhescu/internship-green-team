@@ -16,6 +16,14 @@ module.exports = {
           key: 'id',
         },
       },
+      coursesid: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Courses',
+          key: 'id',
+        },
+      },
       quizzid: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',

@@ -21,7 +21,8 @@ module.exports = {
                         email: req.body.email,
                         password: hash,
                         forgotPassword: random.generate(15),
-                        admin: req.body.admin
+                        admin: req.body.admin,
+                        profilepicture: req.file.path
                     })
                 .then(user => res.status(201).send(user))
                 .catch(error => res.status(400).send(error.message));

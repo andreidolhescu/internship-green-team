@@ -31,14 +31,16 @@ module.exports = (sequelize, DataTypes) => {
     admin: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    profilepicture: {
+      type: DataTypes.STRING,
     }
   });
    Users.associate = function(models) {
     // associations can be defined here
-    /*Users.hasMany(models.course, {
-      foreignKey: 'userId',
-      as: 'courses'
-    });*/
+    Users.belongsToMany(models.Course, {
+      through: 'UserCourses'
+    });
   };
   return Users;
 };

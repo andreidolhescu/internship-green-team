@@ -17,7 +17,16 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({storage: storage});
+const storageprofilepicture = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './profilepictures/');
+    },
+    filename: function(req, file, cb) {
+        cb(null, new Date().toISOString() + file.originalname);
+    }
+})
+
+const uploadProfilepicture = multer({storage: storageprofilepicture});
 
 
 module.exports = (app) => {
@@ -52,7 +61,7 @@ module.exports = (app) => {
     //}));
 
     //User
-    app.post('/api/register', userController.create);
+    app.post('/api/register', uploadProfilepicture.single('profilepicture'), userController.create);
     app.get('/api/register/:id',userCheckAuth, userController.retrive);
     app.get('/api/register', userController.list);
     app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
@@ -69,7 +78,7 @@ module.exports = (app) => {
     app.delete('/api/Category/delete/:idCategory', adminCheckAuth, CategoryController.destroy);
 
     //Courses
-    app.post('/api/Courses/:idCategory', upload.single('courseImage'), CourseController.create);
+    app.post('/api/Courses/:idCategory', uploadProfilepicture.single('courseImage'), CourseController.create);
     app.get('/api/Courses/listbyidCategory/:idCategory', CourseController.list);
     app.get('/api/Courses/all', CourseController.listCourses);
     app.get('/api/Courses/:courseId', userCheckAuth, CourseController.getById);

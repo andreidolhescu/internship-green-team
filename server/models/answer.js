@@ -24,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'chaptersid',
       onDelete: 'CASCADE'
     });
+
+    Answer.belongsTo(models.Course, {
+      foreignKey: 'coursesid',
+      onDelete: 'CASCADE'
+    });
   };
   return Answer;
 };
