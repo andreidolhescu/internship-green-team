@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   Course.associate = function(models) {
     //associations can be defined here
 
+    Course.hasMany(models.User, {
+      foreignKey: 'courseId',
+      as: 'users'
+    })
+
     Course.belongsTo(models.Categorie, {
       foreignKey: 'categoryId',
       onDelete: 'CASCADE'
