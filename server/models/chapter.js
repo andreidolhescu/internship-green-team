@@ -1,27 +1,24 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Chapters = sequelize.define('Chapters', {
-    title: {
+  let Chapter = sequelize.define('Chapter', {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    content:{
-      type: DataTypes.STRING(500),
+    content: {
+      type: DataTypes.STRING,
       allowNull: false
-    }
-
+    },
   });
-  
-  Chapters.associate = (models) =>{
-    //associations can be defined here
-    Chapters.belongsTo(models.courses,{
-      foreignKey:'idCourse',
-      onDelete:'CASCADE',
+  Chapter.associate = function(models) {
+    Chapter.belongsTo(models.Course, {
+      foreignKey: 'courseId',
+      onDelete: 'CASCADE'
     });
-    Chapters.hasMany(models.Quizzes,{
-      foreignKey:'idChapter',
-      as:'chapterItems',
-    });
+    Chapter.hasMany(models.Quiz, {
+      foreignKey: 'chapterId',
+      as: 'quizzes'
+    })
   };
-  return Chapters;
+  return Chapter;
 };

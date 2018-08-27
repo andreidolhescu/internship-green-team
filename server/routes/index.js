@@ -2,98 +2,64 @@ const cors = require('cors'); // do not remove this
 const adminCheckAuth = require('../middleware/admin-check-out');
 const userCheckAuth = require('../middleware/user-check-out');
 const testController = require('../controllers').testController;
-const chapters=require('../controllers').chapter;
-const quizzes=require('../controllers').quiz;
-const qoptions = require ('../controllers').quizOptions;
-
-const multer = require('multer');
-
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-        cb(null, './uploads/');
-    },
-    filename: function(req, file, cb) {
-        cb(null, new Date().toISOString() + file.originalname);
-    }
-})
-
-const upload = multer({storage: storage});
+const userController = require('../controllers').userController;
+const courseController = require('../controllers').courseController;
+const categorieController = require('../controllers').categorieController;
+const chapterController = require('../controllers').chapterController;
+const quizController = require('../controllers').quizController;
+const quizOptionController = require('../controllers').quizOptionController;
 
 
 module.exports = (app) => {
-
-    app.use(cors()); // do not remove this
-
-    app.get('/api', (req, res) => res.status(200).send({
-        message: 'Welcome to the Internship',
-    }));
-
-    // start examples
-    // the following routes are only for guidance, you can remove them
-    app.post('/api/test', testController.create);
-    app.get('/api/test', testController.list);
-    app.get('/api/test/:testId', testController.getById);
-    app.put('/api/test/:testId', testController.update);
-    app.delete('/api/test/:testId', testController.destroy);
-    // end examples
-}
-
-const userController = require('../controllers').users;
-const Dashboard = require('../controllers').Dashboard;
-const Courses = require('../controllers').Courses;
-
-module.exports = (app) => {
-    app.post('/api', adminCheckAuth, (req,res) => res.status(200).send({
+    app.use(cors()); //Do not remove this
+    
+    app.get('/api', (req,res) => res.status(200).send({
         message: 'Welcome to the Users API! Token',
     }));
-    //app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
-    //    message:'Welcome to update;',
-    //}));
+    app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
+       message:'Welcome to update;',
+    }));
 
-    //User
-    app.post('/api/register', userController.create);
-    app.get('/api/register/:id',userCheckAuth, userController.retrive);
-    app.get('/api/register', userController.list);
-    app.post('/api/forgotPassword',userCheckAuth, userController.forgotPassword);
-    app.post('/api/login', userController.login); 
-    app.post('/api/reset/:passwordToken', userController.reset);
-    app.put('/api/register/:id',userController.update);
-    app.delete('/api/register/:id', userController.destroy);
+    // Users
+    app.post('/api/register', userController.createUser);
+    app.get('/api/users', userController.getAllUsers);
+    app.get('/api/users/:userId', userController.getUsersAndCourses);
+    app.post('/api/login', userController.userLogin);
+    app.post('/api/users/forgotPassword', userController.userRequestPasswordReset);
+    app.post('/api/users/reset/:passwordToken', userController.userPasswordReset);
+    app.put('/api/users/:userId',userController.updateUserById);
+    app.delete('/api/users/:userId', userController.destroyUserById);
 
-    //Course categories
-    app.post('/api/Category/add', Dashboard.create);
-    app.get('/api/Category', Dashboard.list);
-    app.get('/api/Category/:CategoryId', userCheckAuth, Dashboard.getById);
-    app.put('/api/Category/:CategoryId', Dashboard.update);
-    app.delete('/api/Category/delete/:idCategory', adminCheckAuth, Dashboard.destroy);
+    // Courses
+    app.post('/api/categories/:categoryId', courseController.createCourseForCategory);
+    app.put('/api/categories/courses/:courseId', courseController.updateCourse);
+    app.delete('/api/categories/courses/:courseId', courseController.destroyCourse);
+    app.get('/api/categories/courses/:courseId', courseController.showCourseAndChapters);
+    app.get('/api/categories/courses', courseController.showAllCoursesAndChapters);
 
-    //Courses
-    app.post('/api/Courses/add', upload.single('courseImage'), Courses.create);
-    app.post('/api/Courses/listbyidCategory', Courses.list);
-    app.get('/api/Courses/:courseId', userCheckAuth, Courses.getById);
-    app.put('/api/Courses/:courseId', adminCheckAuth, Courses.updateAdminC);
-    app.delete('/api/deleteCourse/:courseId', adminCheckAuth, Courses.destroyC);
+    // Categories
+    app.post('/api/categories', categorieController.createCategory);
+    app.get('/api/categories', categorieController.getCategoriesAndCourses);
+    app.get('/api/categories/:categoryId', categorieController.getCategoryWithCourses);
+    app.put('/api/categories/:categoryId', categorieController.updateCategory);
+    app.delete('/api/categories/:categoryId', categorieController.destroyCategory);
 
-    //Quiz options
-    app.get('/api/optionsList', qoptions.list);
-    app.post('/api/optionsListquiz', qoptions.getById);
-    app.put('/api/updateQuizOptions', qoptions.update);
-    app.delete('/api/deleteOptions/:idQuiz/items/:id', qoptions.destroy);
-    app.post('/api/addquiz/:idQuiz/items',qoptions.create);
+    // Chapters
+    app.post('/api/categories/courses/:courseId', chapterController.createChapterForCourse);
+    app.put('/api/categories/courses/chapters/:chapterId', chapterController.updateChapterForCourse);
+    app.delete('/api/categories/courses/chapters/:chapterId', chapterController.destroyChapterForCourse);
+    app.get('/api/categories/course/quizes', chapterController.showAllChaptersAndQuizzes);
 
-    //Chapters
-    app.post('/api/listbycourse',userCheckAuth,chapters.listbycourse);
-    app.get('/api/listc/:testId',userCheckAuth,chapters.listc);
-    app.post('/api/addchapter',userCheckAuth,chapters.createc);
-    app.put('/api/updateAdmin/:testId',adminCheckAuth,chapters.updateAdmin);
-    app.delete('/api/deletechapter/:testId',adminCheckAuth, chapters.destroy);
+    //Quiz
+    app.post('/api/categories/courses/chapters/:idChapter/quiz', quizController.createQuizForChapter);
+    app.get('/api/categories/courses/chapters/:idQuiz/quiz', quizController.listQuizAndQuizOptions);
+    app.put('/api/categories/courses/chapters/:idQuiz/quiz', quizController.updateQuizForChapter);
+    app.delete('/api/categories/courses/chapters/:idQuiz/quiz', quizController.destroyQuizForChapter);
 
-    //Quizzes
-    app.post('/api/addchapter/:idChapter/items',quizzes.createq);
-    app.get('/api/listq',quizzes.listq);
-    app.delete('/api/deletequiz/:idQuiz',quizzes.destroyq);
-    app.get('/api/listbyid/:idQuiz',quizzes.retrieve);
-    app.put('/api/updateq/:idQuiz',quizzes.update);
+    
+    // QuizOptions
+    app.post('/api/categories/courses/chapters/quiz/:idQuiz', quizOptionController.createQuizOption);
+    app.get('/api/categories/courses/chapters/quiz', quizOptionController.listQuizOption);
+    app.put('/api/categories/courses/chapters/quiz/:quizOptionId', quizOptionController.updateQuizOption);
+    app.delete('/api/categories/courses/chapters/quiz/:quizOptionId', quizController.destroyQuizForChapter);
 };
-
-

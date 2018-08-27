@@ -1,104 +1,77 @@
-const Chapters = require('../models').Chapters;
-const User = require('../models').Users;
+const Chapter = require('../models').Chapter;
+const Quiz = require('../models').Quiz;
 
 module.exports = {
-    createc (req, res) {
-        return Chapters
+    createChapterForCourse(req, res){
+        return Chapter
             .create({
-            title: req.body.title,
-            content:req.body.content,
-            //idCourse:req.params.idCourse   
+                name: req.body.name,
+                content: req.body.content,
+                courseId: req.params.courseId
             })
-            .then(chapter => res.status(201).send(chapter))
-            .catch(error => res.status(400).send(error));
+            .then(chapter => res.status(200).send(chapter))
+            .catch(() => res.status(400).send(`There is no such course as course ${req.params.courseId}`))
     },
-    listc(req, res) {
-        return Chapters
-            .findById(req.params.testId)
-            .then(chapter =>{ 
-                if (!chapter) {
-                    return res.status(404).send({
-                        message: 'Chapter Not Found',
-                    });
-                }else res.status(201).send(chapter)})
-            .catch(error => res.status(400).send(error));
-    },
-    listbycourse(req, res) {
-        let idCourse=req.body.idCourse;
-        if (!idCourse) {
-            return res.status(400).send({
-                message: "Id course required!"
-            });
-        }
-         return Chapters
-            .findAll({
-                where:{
-                    idCourse:idCourse
+    updateChapterForCourse(req, res){
+        return Chapter
+            .find({
+                where: {
+                    id: req.params.chapterId,
+                    // TODO: Delete(all commented code) this at a later time if all goes well!
+                    //courseId: req.params.courseId
                 }
             })
-            .then(chapter => res.status(201).send(chapter))
-            .catch(error => res.status(400).send(error));
-    },
-    updateAdmin (req, res) {
-        return Chapters
-            .findById(req.params.testId)
             .then(chapter => {
-                if (!chapter) {
-                    return res.status(404).send({
-                        message: 'Chapter Not Found',
-                    });
+                if(!chapter){
+                    return res.status(404).send('Chapter not found');
                 }
-                if (!req.body.title) {
-                    return res.status(400).send({
-                        message: "Title required!"
-                    });
-                }
-                if (!req.body.content) {
-                    return res.status(400).send({
-                        message: "Content required!"
-                    });
-                }
-                if (!req.body.idCourse) {
-                    return res.status(400).send({
-                        message: "idCourse required!"
-                    });
-                }
-                if (!req.body.title&& !req.body.content && !req.body.idCourse ) {
-                    return res.status(400).send({
-                        message: "Miss!"
-                    });
-                }
+
                 return chapter
                     .update({
-                        title: req.body.title || chapter.title,
-                        content:req.body.content || chapter.content,
-                        idCourse:req.body.idCourse || chapter.idCourse,
+                        name: req.body.name || chapter.name,
+                        content: req.body.content || chapter.content
                     })
-                    .then(chapter =>{ 
-                        if (!chapter) {
-                            return res.status(404).send({
-                                message: 'Chapter Not Found',
-                            });
-                        }else res.status(201).send(chapter)})
-                    .catch((error) => res.status(400).send(error));
+                    .then(chapter => res.status(200).send(chapter))
+                    .catch(error => res.status(400).send(error))
             })
-            .catch((error) => res.status(400).send(error));
+            .catch(error => res.status(400).send(error))
     },
-    destroy (req, res) {
-        return Chapters
-            .findById(req.params.testId)
+    destroyChapterForCourse(req, res){
+        return Chapter 
+            .find({
+                where:{
+                    id: req.params.chapterId,
+                    // TODO: Delete(all commented code) this at a later time if all goes well!
+                    //courseId: req.params.courseId
+                }
+            })
             .then(chapter => {
-                if (!chapter) {
-                    return res.status(404).send({
-                        message: 'Chapter not Found',
-                    });
+                if(!chapter){
+                    return res.status(400).send('Chapter not found')
                 }
 
                 return chapter
                     .destroy()
-                    .then(() => res.status(200).send("Success"))
-                    .catch((error) => res.status(400).send(error));
+                    .then(chapter => res.status(200).send(chapter))
+                    .catch(error => res.status(400).send(error))
             })
-            .catch((error) => res.status(400).send(error));
+            .catch(error => re.status(400).send(error))
+    },
+    /*showAllChapters(req,res){
+        return Chapter
+            .all()
+            .then(chapters => res.status(200).send(chapters))
+            .catch(error => res.status(400).send(error))
+    },*/
+    showAllChaptersAndQuizzes(req, res) {
+        return Chapter
+            .findAll({
+                include: [{
+                    model: Quiz,
+                    as: 'quizzes'
+                }]
+            })
+            .then(chapters => res.status(200).send(chapters))
+            .catch(error => res.status(400).send(error))
     }
 };
