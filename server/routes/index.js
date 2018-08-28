@@ -48,6 +48,7 @@ module.exports = (app) => {
     app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
        message:'Welcome to update;',
     }));
+    app.get('/test');
 
     //Testing
     //app.get('/api/user/:userId/course/:courseId', userCourseController.create);
