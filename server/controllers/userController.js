@@ -55,6 +55,7 @@ module.exports = {
                             firstName: req.body.firstName || user.firstName,
                             lastName: req.body.lastName || user.lastName,
                             password: hash || user.password,
+                            admin: req.body.admin || user.admin,
                             email: req.body.email || user.email,
                             userImage: req.body.userImage || user.userImage
                         })
