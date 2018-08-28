@@ -48,6 +48,7 @@ module.exports = (app) => {
     app.put('/api/updateAdminq/:testId',adminCheckAuth,(req,res)=>res.status(200).send({
        message:'Welcome to update;',
     }));
+    app.get('/test');
 
     //Testing
     //app.get('/api/user/:userId/course/:courseId', userCourseController.create);
@@ -84,10 +85,10 @@ module.exports = (app) => {
     app.get('/api/categories/course/quizes', chapterController.showAllChaptersAndQuizzes);
 
     //Quiz
-    app.post('/api/categories/courses/chapters/:idChapter/quiz', quizController.createQuizForChapter);
-    app.get('/api/categories/courses/chapters/:idQuiz/quiz', quizController.listQuizAndQuizOptions);
-    app.put('/api/categories/courses/chapters/:idQuiz/quiz', quizController.updateQuizForChapter);
-    app.delete('/api/categories/courses/chapters/:idQuiz/quiz', quizController.destroyQuizForChapter);
+    app.post('/api/categories/courses/chapters/:chapterId', quizController.createQuizForChapter);
+    app.get('/api/categories/courses/chapters/quiz/:idQuiz', quizController.listQuizAndQuizOptions);
+    app.put('/api/categories/courses/chapters/quiz/:idQuiz', quizController.updateQuizForChapter);
+    app.delete('/api/categories/courses/chapters/quiz/:idQuiz', quizController.destroyQuizForChapter);
 
     
     // QuizOptions
