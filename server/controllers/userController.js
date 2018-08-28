@@ -34,12 +34,7 @@ module.exports = {
     },
     getUsersAndCourses(req,res) {
         return User
-            .findById(req.params.userId, {
-                include: [{
-                    model: Course,
-                    as: 'courses'
-                }],
-            })
+            .findById(req.params.userId)
             .then(users => res.status(200).send(users))
             .catch(error => res.status(400).send(error));
     },
@@ -146,7 +141,7 @@ module.exports = {
                         console.log('Message sent: %s', info.messageId);
                         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
                         return res.status(200).send({
-                            message: 'Reset password message send to ' + user.email
+                            message: 'Reset password message send to BOGDAN ' + user.email
                         });
                     });
                 })
