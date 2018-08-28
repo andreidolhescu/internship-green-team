@@ -6,7 +6,7 @@ module.exports = {
         return Quiz
             .create({
                 content: req.body.content,
-                chapterId: req.param.chapterId
+                chapterId: req.params.chapterId
             })
             .then(quiz => res.status(201).send(quiz))
             .catch(error => res.status(400).send(error));

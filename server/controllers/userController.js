@@ -131,7 +131,7 @@ module.exports = {
                         to: `${user.email}`,
                         subject: 'ResetPassword',
                         text: 'GG EZ WORK!',
-                        html: 'http://api/users/reset/'+`${user.forgotPassword}`
+                        html: 'http://192.168.151.17:4200/api/users/reset/'+`${user.forgotPassword}`
                     };
                     
                     return transporter.sendMail(mailOptions, (error, info) => {
