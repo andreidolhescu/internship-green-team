@@ -9,14 +9,23 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNullNull: false
     },
+    imagePath: {
+      type:DataTypes.STRING,
+      defaultValue: 'https://i.imgur.com/ute7gNW.jpg'
+    }
   });
   Course.associate = function(models) {
     //associations can be defined here
 
-    Course.hasMany(models.User, {
-      foreignKey: 'courseId',
-      as: 'users'
-    })
+    // Course.hasMany(models.User, {
+    //   foreignKey: 'courseId',
+    //   as: 'users'
+    // })
+
+    Course.belongsToMany(models.User, {
+      through: models.UserCourse,
+      foreignKey: 'userId'
+    });
 
     Course.belongsTo(models.Categorie, {
       foreignKey: 'categoryId',

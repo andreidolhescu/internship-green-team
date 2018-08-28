@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         len: [8,100]
       }
     },
+    userImage: {
+      type: DataTypes.STRING,
+      defaultValue: 'https://i.imgur.com/ksFewDB.jpg'
+    },
     forgotPassword: {
       type: DataTypes.STRING,
       defaultValue: 'default'
@@ -36,11 +40,15 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     
-    User.belongsTo(models.Course, {
-      foreignKey: 'courseId',
-      onDelete: 'CASCADE'
-    });
+    // User.belongsTo(models.Course, {
+    //   foreignKey: 'courseId',
+    //   onDelete: 'CASCADE'
+    // });
     
+    User.belongsToMany(models.Course, {
+      through: models.UserCourse,
+      foreignKey: 'courseId'
+    })
 
     User.hasMany(models.Answer, {
       foreignKey: 'userId',

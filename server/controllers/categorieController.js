@@ -5,7 +5,8 @@ module.exports = {
     createCategory(req, res) {
         return Category
             .create({
-                name: req.body.name
+                name: req.body.name,
+                color: req.body.color
             })
             .then(user => res.status(200).send(user))
             .catch(error => res.status(400).send(error))
@@ -51,7 +52,8 @@ module.exports = {
 
                 return category
                     .update({
-                        name: req.body.name || category.name
+                        name: req.body.name || category.name,
+                        color: req.body.color || category.color
                     })
                     .then(category => res.status(200).send(category))
                     .catch(error => res.status(400).send(error))
