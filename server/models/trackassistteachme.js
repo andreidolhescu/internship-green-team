@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete:'CASCADE'
     });
 
-    TrackAssistTeachMe.belongsTo(models.Chapter,{
+    TrackAssistTeachMe.belongsTo(models.Answers,{
       foreignKey:'idProcess',
       onDelete:'CASCADE',
     });

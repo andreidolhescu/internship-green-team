@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     Course.hasMany(models.Chapter, {
       foreignKey: 'courseId',
       as: 'chapters'
-    })
+    });
   };
   return Course;
 };

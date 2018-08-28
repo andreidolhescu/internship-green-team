@@ -8,6 +8,8 @@ const categorieController = require('../controllers').categorieController;
 const chapterController = require('../controllers').chapterController;
 const quizController = require('../controllers').quizController;
 const quizOptionController = require('../controllers').quizOptionController;
+const answerController=require('../controllers').answerController;
+const trackController=require('../controllers').trackController;
 
 
 
@@ -56,15 +58,23 @@ module.exports = (app) => {
     app.get('/api/categories/course/quizes', chapterController.showAllChaptersAndQuizzes);
 
     //Quiz
-    app.post('/api/categories/courses/chapters/:idChapter/quiz', quizController.createQuizForChapter);
+    app.post('/api/categories/courses/chapters/:chapterId', quizController.createQuizForChapter);
     app.get('/api/categories/courses/chapters/:idQuiz/quiz', quizController.listQuizAndQuizOptions);
     app.put('/api/categories/courses/chapters/:idQuiz/quiz', quizController.updateQuizForChapter);
     app.delete('/api/categories/courses/chapters/:idQuiz/quiz', quizController.destroyQuizForChapter);
 
     
     // QuizOptions
-    app.post('/api/categories/courses/chapters/quiz/:idQuiz', quizOptionController.createQuizOption);
+    app.post('/api/categories/courses/chapters/quiz/:quizId', quizOptionController.createQuizOption);
     app.get('/api/categories/courses/chapters/quiz', quizOptionController.listQuizOption);
     app.put('/api/categories/courses/chapters/quiz/:quizOptionId', quizOptionController.updateQuizOption);
     app.delete('/api/categories/courses/chapters/quiz/:quizOptionId', quizController.destroyQuizForChapter);
+
+    //Answer
+    app.post('/api/createAnswer/:userId/:chapterId/:quizId/:optionId',answerController.createProgress);
+    app.get('/api/listAnswer',answerController.showProgress);
+
+    //Track
+    app.post('/api/createTrack/:userId/:courseId',trackController.createTrack);
+    app.get('/api/listTrack/:userId',trackController.showTrack)
 };

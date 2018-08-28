@@ -1,22 +1,29 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
-  var Answers = sequelize.define('Answers', {});
+module.exports = (Sequelize, DataTypes) => {
+  var Answers = sequelize.define('Answers', {
+    score:{
+      type:Sequelize.INTEGER
+    }
+  });
   Answers.associate = (models) =>{
     // associations can be defined here
 
     Answers.belongsTo(models.User,{
       foreignKey:'userId',
-      onDelete:'CASCADE'
+      onDelete:'CASCADE',
+      as:'User'
     });
 
     Answers.belongsTo(models.Chapter,{
       foreignKey:'chapterId',
-      onDelete:'CASCADE'
+      onDelete:'CASCADE',
+      as:'Chapter'
     });
 
     Answers.belongsTo(models.Quiz,{
       foreignKey:'quizId',
-      onDelete:'CASCADE'
+      onDelete:'CASCADE',
+      as:'Quiz'
     });
 
     Answers.belongsTo(models.QuizOption,{

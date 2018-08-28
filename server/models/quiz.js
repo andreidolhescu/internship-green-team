@@ -13,10 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey:'quizId',
       as:'quizOptions',
     });
-    Quiz.hasMany(models.Answer, {
-      foreignKey: 'quizId',
-      as: 'answers'
-    })
+    // Quiz.hasMany(models.Answers, {
+    //   foreignKey: 'quizId',
+    //   as: 'chosedOption'
+    // });
   };
   return Quiz;
 };

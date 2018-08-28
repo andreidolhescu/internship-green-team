@@ -19,10 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey:'quizId',
       onDelete:'CASCADE',
     });
-    QuizOption.hasOne(models.Answer, {
-      foreignKey: 'quizOptionId',
-      as: 'answers'
-    })
+    // QuizOption.hasOne(models.Answer, {
+    //   foreignKey: 'quizOptionId',
+    //   as: 'answers'
+    // })
   };
   return QuizOption;
 };

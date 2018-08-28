@@ -6,7 +6,7 @@ module.exports = {
             .create({
                 answer: req.body.answer,
                 correct: req.body.correct,
-                idQuiz: req.params.idQuiz
+                quizId: req.params.quizId
             })
             .then(quizOption => res.status(201).send(quizOption))
             .catch(error => res.status(400).send(error.message));
@@ -23,7 +23,7 @@ module.exports = {
         return QuizOption
             .find({
                 where: {
-                    idQuiz: req.body.idQuiz
+                    quizId: req.body.quizId
                 }
             })
             .then(quizOption => res.status(201).send(quizOption))
@@ -63,7 +63,7 @@ module.exports = {
         return QuizOption
             .find({
                 where: {
-                    id: req.params.quizOptionId,
+                    id: req.params.id,
                     //Todo: Delete if you don't need it
                     //idQuiz: req.params.idQuiz,
                 },
