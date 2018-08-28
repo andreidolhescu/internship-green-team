@@ -146,7 +146,7 @@ module.exports = {
                         console.log('Message sent: %s', info.messageId);
                         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
                         return res.status(200).send({
-                            message: `Reset password message send to ${user.email}`
+                            message: 'Reset password message send to ' + user.email
                         });
                     });
                 })
@@ -174,7 +174,7 @@ module.exports = {
                     return res.send('Password and Confirm password fields are required!');
                 }
 
-                let comparePasswords = password.compareLocal(confirmPassword);
+                let comparePasswords = password.localeCompare(confirmPassword);
                 
                 if(comparePasswords != 0){
                     return res.send('Passwords must match');
