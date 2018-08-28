@@ -52,13 +52,9 @@ module.exports = {
                         message: 'User not found'
                     });
                 }
-                bcrypt.hash(req.body.password,10,(error, hash) => {
-                    if(error){
-                        res.status(400).send({
-                            message: `Error complicated:${error}`
-                        });
-                    }
 
+                bcrypt.hash(req.body.password,10,(error, hash) => {
+                    console.log(hash);
                     return user
                         .update({
                             firstName: req.body.firstName || user.firstName,

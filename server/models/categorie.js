@@ -5,6 +5,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    color: {
+      type:DataTypes.STRING,
+      defaultValue: '#00f2fe'
+    }
   });
   Categorie.associate = function(models) {
     Categorie.hasMany(models.Course, {

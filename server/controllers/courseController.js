@@ -8,6 +8,7 @@ module.exports = {
             .create({
                 title: req.body.title,
                 description: req.body.description,
+                imagePath: req.body.imagePath,
                 categoryId: req.params.categoryId,
             })
             .then(course => res.status(201).send(course))
@@ -32,7 +33,7 @@ module.exports = {
                     .update({
                         title: req.body.title || course.title,
                         description: req.body.description || course.description,
-                        courseImage: req.body.courseImage || course.courseImage          
+                        imagePath: req.body.imagePath || course.imagePath          
                     })
                     .then(updateCourse => res.status(200).send(updateCourse))
                     .catch(error => res.status(400).send(error));

@@ -25,7 +25,7 @@ module.exports = {
           as: 'categoryId'
         },
       },
-      courseImage: {
+      imagePath: {
         type: Sequelize.STRING,
         defaultValue: 'https://i.imgur.com/ute7gNW.jpg'
       },
