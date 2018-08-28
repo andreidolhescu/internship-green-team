@@ -25,6 +25,10 @@ module.exports = {
           as: 'categoryId'
         },
       },
+      courseImage: {
+        type: Sequelize.STRING,
+        defaultValue: 'https://i.imgur.com/ute7gNW.jpg'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

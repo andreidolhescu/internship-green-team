@@ -3,9 +3,9 @@ const jwt = require('jsonwebtoken');
 const random = require('randomstring');
 const nodemailer = require('nodemailer');
 
-const User = require('../models').User;
-const Course = require('../models').Course;
 
+const Course = require('../models').Course;
+const User = require('../models').User;
 
 let array = [];
 
@@ -17,6 +17,7 @@ module.exports = {
                     message: `Error ${error}`
                 });
             }
+           
             return User
                 .create(
                     {
@@ -25,10 +26,10 @@ module.exports = {
                         email: req.body.email,
                         password: hash,
                         forgotPassword: random.generate(15),
-                        admin: req.body.admin
+                        admin: req.body.admin,
                     })
                 .then(user => res.status(201).send(user))
-                .catch(error => res.status(400).send(error.message));
+                .catch(error => res.status(400).send('Here' + error.message));
         });
     },
     getUsersAndCourses(req,res) {
@@ -51,13 +52,25 @@ module.exports = {
                         message: 'User not found'
                     });
                 }
-                return user
-                    .update({
-                        firstName: req.body.firstName || user.firstName,
-                        lastName: req.body.lastName || user.lastName
-                    })
-                    .then(() => res.status(200).send(user))
-                    .catch((error) => res.status(400).send(error));
+                bcrypt.hash(req.body.password,10,(error, hash) => {
+                    if(error){
+                        res.status(400).send({
+                            message: `Error complicated:${error}`
+                        });
+                    }
+
+                    return user
+                        .update({
+                            firstName: req.body.firstName || user.firstName,
+                            lastName: req.body.lastName || user.lastName,
+                            password: hash || user.password,
+                            email: req.body.email || user.email,
+                            userImage: req.body.userImage || user.userImage
+                        })
+                        .then(() => res.status(200).send(user))
+                        .catch((error) => res.status(400).send(error));
+                })
+                
         })
         .catch(error => res.status(400).send(error));
     },
@@ -173,7 +186,7 @@ module.exports = {
 
                 bcrypt.hash(password, 10, (error, hash) => {
                     if(error){
-                        res.status(400).send({
+                        return res.status(400).send({
                             message: `Error: ${error}`
                         });
                     }

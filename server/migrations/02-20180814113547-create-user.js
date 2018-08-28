@@ -8,15 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      courseId:{
-        type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
-        references: {
-          model: 'Courses',
-          key: 'id',
-          as: 'courseId'
-        }
-      },
+      // courseId:{
+      //   type: Sequelize.INTEGER,
+      //   onDelete: 'CASCADE',
+      //   references: {
+      //     model: 'Courses',
+      //     key: 'id',
+      //     as: 'courseId'
+      //   }
+      // },
       firstName: {
         type: Sequelize.STRING,
         allowNull: false
@@ -47,6 +47,10 @@ module.exports = {
       admin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
+      },
+      userImage: {
+        type: Sequelize.STRING,
+        defaultValue: 'https://i.imgur.com/ksFewDB.jpg'
       },
       createdAt: {
         allowNull: false,

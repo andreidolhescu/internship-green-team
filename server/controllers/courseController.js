@@ -31,7 +31,8 @@ module.exports = {
                 return course
                     .update({
                         title: req.body.title || course.title,
-                        description: req.body.description || course.description             
+                        description: req.body.description || course.description,
+                        courseImage: req.body.courseImage || course.courseImage          
                     })
                     .then(updateCourse => res.status(200).send(updateCourse))
                     .catch(error => res.status(400).send(error));
