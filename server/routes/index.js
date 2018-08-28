@@ -92,7 +92,7 @@ module.exports = (app) => {
 
     
     // QuizOptions
-    app.post('/api/categories/courses/chapters/quiz/:idQuiz', quizOptionController.createQuizOption);
+    app.post('/api/categories/courses/chapters/quiz/:quizId', quizOptionController.createQuizOption);
     app.get('/api/categories/courses/chapters/quiz', quizOptionController.listQuizOption);
     app.put('/api/categories/courses/chapters/quiz/:quizOptionId', quizOptionController.updateQuizOption);
     app.delete('/api/categories/courses/chapters/quiz/:quizOptionId', quizController.destroyQuizForChapter);
