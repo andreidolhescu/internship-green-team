@@ -142,7 +142,7 @@ module.exports = {
                         console.log('Message sent: %s', info.messageId);
                         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
                         return res.status(200).send({
-                            message: 'Reset password message send to BOGDAN ' + user.email
+                            message: 'Reset password message send to ' + user.email
                         });
                     });
                 })
