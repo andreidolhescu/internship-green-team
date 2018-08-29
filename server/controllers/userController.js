@@ -32,9 +32,29 @@ module.exports = {
                 .catch(error => res.status(400).send('Here' + error.message));
         });
     },
+    addCourseToUser(req, res){
+        return Course
+            .findById(req.params.courseId)
+            .then(course => {
+                if(!course) return res.status(400).send('No course found')
+                return Course
+                    .create({
+                        title: course.title,
+                        description: course.description,
+                        userId: req.params.userId
+                    })
+                    .catch(error => res.status(400).send('Error add course ' + error))
+            })
+            .catch(noCourse => res.send('No course'))
+    },
     getUsersAndCourses(req,res) {
         return User
-            .findById(req.params.userId)
+            .findById(req.params.userId, {
+                include: [{
+                    model: Course,
+                    as: 'courses'
+                }]
+            })
             .then(users => res.status(200).send(users))
             .catch(error => res.status(400).send(error));
     },

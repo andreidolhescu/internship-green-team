@@ -53,7 +53,8 @@ module.exports = (app) => {
     //Testing
     //app.get('/api/user/:userId/course/:courseId', userCourseController.create);
     //app.get('/api/test', userController.listCourseAndUser);
-
+    app.get('/api/course/:courseId/:userId', userController.addCourseToUser)
+    app.get('/api/getUsers/:userId', userController.getUsersAndCourses);
     // Users
     app.post('/api/register', userController.createUser);
     app.get('/api/users', userController.getAllUsers);

@@ -22,9 +22,9 @@ module.exports = (sequelize, DataTypes) => {
     //   as: 'users'
     // })
 
-    Course.belongsToMany(models.User, {
-      through: models.UserCourse,
-      foreignKey: 'userId'
+    Course.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
     });
 
     Course.belongsTo(models.Categorie, {
